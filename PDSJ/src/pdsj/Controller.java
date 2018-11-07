@@ -79,7 +79,7 @@ public class Controller {
     //Flows Fuso Horario
      
      public void fusoFlow () {
-        Menu menu=all.getMenu(1);
+        Menu menu=all.getMenu(20);
         String opcao;
         do {
             menu.show();
