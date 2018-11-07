@@ -22,11 +22,7 @@ public class View {
     // Cria a View baseada em Menus textuais
     public static Menus initView() { 
         Menus menusSIGCA = new Menus();
-        Opcao op1, op2, op3, op4,op5; 
-        // Layout definido aqui.
-        op1 = new Opcao("Calculadora de datas ", "C");
-        op2 = new Opcao("Fuso Horarios", "F");
-        op3 = new Opcao("Agenda ", "A");  
+        Opcao op1, op2, op3, op4,op5;  
         
         //Menu principal
         List<Opcao> linhas = Arrays.asList(op1, op2, op3);
