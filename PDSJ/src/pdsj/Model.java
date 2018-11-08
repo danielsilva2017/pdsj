@@ -5,10 +5,16 @@
  */
 package pdsj;
 
+import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.Month;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import static java.time.temporal.ChronoUnit.MINUTES;
+import static java.time.temporal.ChronoUnit.HOURS;
+import java.time.temporal.TemporalUnit;
 import static pdsj.OtherFunctions.fashionPrint;
 
 /**
@@ -37,6 +43,26 @@ public class Model {
         fashionPrint(chegada);
         
     }
+    public void horasPais(String zoneId){
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of(zoneId));
+        LocalDate data = now.toLocalDate();
+        LocalTime horas = now.toLocalTime();
+        ZoneId id = now.getZone();
+        System.out.println("Sao "+horas+" em "+id+" na data "+data);
+        
+    }
+    public void  diferençaHoras(String zoneId,String zoneId2){
+        LocalDateTime now = LocalDateTime.now();
+        ZoneId fusoN=ZoneId.of(zoneId);
+        LocalDateTime now2 = LocalDateTime.now();
+        ZoneId fusoN2=ZoneId.of(zoneId2);
+        ZonedDateTime nowz = ZonedDateTime.of(now,fusoN);
+        ZonedDateTime nowz2 = ZonedDateTime.of(now2,fusoN2);
+        System.out.println(nowz + "  " + nowz2);
+        Duration x = Duration.between(nowz,nowz2);
+        System.out.println("A diferença é "+x  );
+    }
+   
     
     //Funçoes controller3
     

@@ -47,7 +47,7 @@ public class Input {
          }
          catch(ZoneRulesException e) 
              { out.println("Zona Invalida"); 
-               out.print("Novo valor: ");
+               out.println("Novo valor: ");
                input.nextLine(); 
              }
      }

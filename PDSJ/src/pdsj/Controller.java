@@ -93,14 +93,27 @@ public class Controller {
             opcao = Input.lerString(); 
             opcao = opcao.toUpperCase();
             switch(opcao) {
-                case "Q": queHorasSerao();
+                case "Z": horasPais();break;
+                case "D": diferençaHoras();break;
+                case "Q": queHorasSerao();break;
                 case "S": break;
                 default: System.out.println("Opcão Inválida !"); break;
             }
         }
         while(!opcao.equals("S"));    
    }
-     
+   public void horasPais(){
+       System.out.println("Qual é o id do Pais ");
+       String zona= Input.lerStringZona();
+       model.horasPais(zona);
+   }    
+   public void diferençaHoras(){
+      System.out.println("Qual é o id do Pais 1 ");
+       String zona= Input.lerStringZona();
+       System.out.println("Qual é o id do Pais 2 ");
+       String zona2= Input.lerStringZona();
+       model.diferençaHoras(zona,zona2);
+   }
    public void queHorasSerao(){
        int year =0;
        Month month = Month.JANUARY;
@@ -139,7 +152,7 @@ public class Controller {
         
         model.queHorasSerao(year, month, day, hora, minutos, zonaP, zonaC, horaV, minutosV);
    }
-     
+        
      
      
     //Flows Agenda
