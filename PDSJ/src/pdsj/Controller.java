@@ -127,9 +127,9 @@ public class Controller {
         int hora= Integer.parseInt(horaStringRes[0]);
         int minutos=Integer.parseInt(horaStringRes[1]);
         System.out.println("Insira zona de partida");
-        String zonaP= Input.lerString();
+        String zonaP= Input.lerStringZona();
         System.out.println("Insira zona de chegada");
-        String zonaC= Input.lerString();
+        String zonaC= Input.lerStringZona();
         System.out.println("Insira a duração da viagem  no formato HH:MM");
         String horaVString= Input.lerString();
         String [] horaVStringRes= parseHours(horaVString);
