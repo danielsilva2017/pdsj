@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package pdsj;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import static java.lang.System.out;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -15,10 +18,26 @@ import java.util.TreeMap;
  * @author Sephthia Winter
  */
 public class App {
+    public  static  String formatDate="Common";    
+    public static void readFile()throws IOException{
+        String fileName = "C:\\Users\\silva\\Desktop\\mei\\pdsj\\trabalho\\pdsj\\conf.txt";
+        FileReader fileReader = new FileReader(fileName);
+        String [] lines = new String[10];
 
-    
-    public static void main(String[] args) {    
+        try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+            String line;
+            int i =0;
+            while((line = bufferedReader.readLine()) != null) {
+                i++;
+                lines[i] = line;
+            }
+             
+        }
+        formatDate=lines[1];
+    }
+    public static void main(String[] args) throws IOException {    
         // Modelo MVC
+        readFile();
         Model model = new Model();
         View view = new View();
         Controller control =new Controller();

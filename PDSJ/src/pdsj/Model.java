@@ -5,6 +5,12 @@
  */
 package pdsj;
 
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import static pdsj.OtherFunctions.fashionPrint;
+
 /**
  *
  * @author silva
@@ -21,6 +27,15 @@ public class Model {
     
     public void test2(){
         System.out.println("view2");
+    }
+    public void queHorasSerao(int year,Month month,int day,int hour,int minutes,String zonaPartida,String zonaChegada,int hoursFlight,int minutesFlight ){ 
+        LocalDateTime dataDePartida= LocalDateTime.of(year,month,day,hour,minutes);
+        ZoneId zonaDePartida = ZoneId.of(zonaPartida);
+        ZonedDateTime partida = ZonedDateTime.of(dataDePartida,zonaDePartida);
+        ZoneId zonaDeChegada = ZoneId.of(zonaChegada);
+        ZonedDateTime chegada = partida.withZoneSameInstant(zonaDeChegada).plusHours(hoursFlight).plusMinutes(minutesFlight);
+        fashionPrint(chegada);
+        
     }
     
     //Funçoes controller3

@@ -47,9 +47,8 @@ public class View {
         op2 = new Opcao("Diferença de horas", "D");
         op3 = new Opcao("Que horas serao? ", "Q"); 
         List<Opcao> linhas20 = Arrays.asList(op1, op2, op3);
-        Menu menuAlunos20 = new Menu(linhas2, "   Menu principal do Fuso");        
-        menusSIGCA.addMenu(20, menuAlunos2);
-        
+        Menu menuAlunos20 = new Menu(linhas20, "   Menu principal do Fuso");        
+        menusSIGCA.addMenu(20, menuAlunos20);
         
         
         //Agenda
