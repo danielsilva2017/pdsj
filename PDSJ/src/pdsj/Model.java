@@ -16,6 +16,7 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 import static java.time.temporal.ChronoUnit.HOURS;
 import java.time.temporal.TemporalUnit;
 import static pdsj.OtherFunctions.fashionPrint;
+import static pdsj.OtherFunctions.fromSecondsToHours;
 
 /**
  *
@@ -60,7 +61,8 @@ public class Model {
         ZonedDateTime nowz2 = ZonedDateTime.of(now2,fusoN2);
         System.out.println(nowz + "  " + nowz2);
         Duration x = Duration.between(nowz,nowz2);
-        System.out.println("A diferença é "+x  );
+          long a = x.getSeconds();
+        fromSecondsToHours(a);
     }
    
     

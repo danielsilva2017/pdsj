@@ -42,7 +42,10 @@ public class Input {
      while(!ok) {
          try {
              txt = input.nextLine();
+             
              ZoneId zone= ZoneId.of(txt);
+             
+             
              ok = true;
          }
          catch(ZoneRulesException e) 
