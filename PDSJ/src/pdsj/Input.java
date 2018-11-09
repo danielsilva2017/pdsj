@@ -6,6 +6,8 @@
 package pdsj;
 import static java.lang.System.out;
 import static java.lang.System.in;
+import java.time.ZoneId;
+import java.time.zone.ZoneRulesException;
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
@@ -33,7 +35,25 @@ public class Input {
      //input.close();
      return txt;
   } 
-
+  public static String lerStringZona() {
+     Scanner input = new Scanner(in);
+     boolean ok = false; 
+     String txt = "";
+     while(!ok) {
+         try {
+             txt = input.nextLine();
+             ZoneId zone= ZoneId.of(txt);
+             ok = true;
+         }
+         catch(ZoneRulesException e) 
+             { out.println("Zona Invalida"); 
+               out.println("Novo valor: ");
+               input.nextLine(); 
+             }
+     }
+     //input.close();
+     return txt;
+  } 
  
  public static int lerInt() {
      Scanner input = new Scanner(in);
@@ -129,4 +149,5 @@ public class Input {
      //input.close();
      return s;
   }  
+  
 }
