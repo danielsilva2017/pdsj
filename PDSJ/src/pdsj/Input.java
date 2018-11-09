@@ -16,7 +16,9 @@ public class Input {
  /**
   * Métodos de Classe
   */
-    
+  /**
+  * @return string se bem formulada
+  */
  public static String lerString() {
      Scanner input = new Scanner(in);
      boolean ok = false; 

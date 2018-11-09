@@ -35,6 +35,24 @@ public class Model {
     public void test2(){
         System.out.println("view2");
     }
+    /**
+     * Esta função usa a função queHorasSerao() da classe Model para calcular que horas serão 
+     * quando aterrar.
+     * @param year ano da viagem de partida
+     * @param month mes da viagem de partida
+     * @param day dia da viagem de partida
+     * @param hour hora local de partida
+     * @param minutes minutes locais de partida
+     * @param zonaPartida zona local
+     * @param zonaChegada zona de Chegada
+     * @param hoursFlight horas de duração da viagem
+     * @param minutesFlight minutos de duração de viagem
+     * @see  LocalDateTime#of(java.time.LocalDate, java.time.LocalTime) 
+     * @see ZoneId#of(java.lang.String) 
+     * @see ZonedDateTime#of(java.time.LocalDateTime, java.time.ZoneId) 
+     * @see OtherFunctions#fashionPrint(java.time.ZonedDateTime) 
+     * 
+     */
     public void queHorasSerao(int year,Month month,int day,int hour,int minutes,String zonaPartida,String zonaChegada,int hoursFlight,int minutesFlight ){ 
         LocalDateTime dataDePartida= LocalDateTime.of(year,month,day,hour,minutes);
         ZoneId zonaDePartida = ZoneId.of(zonaPartida);

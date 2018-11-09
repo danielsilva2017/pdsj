@@ -14,11 +14,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 /**
- *
- * @author Sephthia Winter
- */
+* Esta é a classe Main a que inicia a aplicação
+*/
 public class App {
     public  static  String formatDate="Common";    
+    /**
+     * Esta função lê o ficheiro de configuração inicial que o utilizador modificar e inicia as 
+     * configurações da aplicação de acordo com esse ficheiro de configuração
+     * @throws IOException se o ficheiro de configuração não for encontrado
+     */
     public static void readFile()throws IOException{
         String fileName = "C:\\Users\\silva\\Desktop\\mei\\pdsj\\trabalho\\pdsj\\conf.txt";
         FileReader fileReader = new FileReader(fileName);
@@ -35,6 +39,11 @@ public class App {
         }
         formatDate=lines[1];
     }
+    /**
+     * Esta função executa a aplicação
+     * @param args not used here
+     * @throws IOException se o ficheiro de configuração não for encontrado
+     */
     public static void main(String[] args) throws IOException {    
         // Modelo MVC
         readFile();
