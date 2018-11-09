@@ -13,17 +13,23 @@ import static pdsj.OtherFunctions.getMonth;
 import static pdsj.OtherFunctions.parseHours;
 
 /**
- *
- * @author silva
+ * Classe que contém as funções do controller , seguindo o modelo MVC
  */
 public class Controller {
     private Model model;
     private View viewTxt;
     private Menus all = new Menus();
-    
+     /**
+     * Faz set do modelo a ser usado no controller
+     * @param alunos o modelo usado
+     */
     public void setModel(Model alunos) { 
 		model = alunos; 
     }
+    /**
+     * Faz set da view  a ser usada no controller
+     * @param txtMenus a view usada
+     */
     public void setView(View txtMenus) { 
                 viewTxt = txtMenus;
                 all=txtMenus.initView();
@@ -36,77 +42,19 @@ public class Controller {
     
     
     //Metodos Fuso Horario
-    
-    
-    
-    //Metodos Agenda
-    
-    
-    
-    
-    //-----------------------------Flows-----------------------------------------------------
-    
-    //Flow principal
-     public void startFlow () {
-        Menu menu=all.getMenu(1);
-        String opcao;
-        do {
-            menu.show();
-            opcao = Input.lerString(); 
-            opcao = opcao.toUpperCase();
-            switch(opcao) {
-                case "C" : calcFlow(); break;
-                case "F" : fusoFlow(); break;
-                case "A" : agendaFlow();break;
-                case "S": break;
-                default: System.out.println("Opcão Inválida !"); break;
-            }
-        }
-        while(!opcao.equals("S"));    
-   } 
-     
-    //Flows Calc
-     
-     public void calcFlow () {
-        Menu menu=all.getMenu(1);
-        String opcao;
-        do {
-            menu.show();
-            opcao = Input.lerString(); 
-            opcao = opcao.toUpperCase();
-            switch(opcao) {
-                case "S": break;
-                default: System.out.println("Opcão Inválida !"); break;
-            }
-        }
-        while(!opcao.equals("S"));    
-   }
-     
-     
-    //Flows Fuso Horario
-     
-     public void fusoFlow () {
-        Menu menu=all.getMenu(20);
-        String opcao;
-        do {
-            menu.show();
-            opcao = Input.lerString(); 
-            opcao = opcao.toUpperCase();
-            switch(opcao) {
-                case "Z": horasPais();break;
-                case "D": diferençaHoras();break;
-                case "Q": queHorasSerao();break;
-                case "S": break;
-                default: System.out.println("Opcão Inválida !"); break;
-            }
-        }
-        while(!opcao.equals("S"));    
-   }
-   public void horasPais(){
+    /**
+     * Esta função usa a função horasPais() da classe Model para calcular uma hora num determinado
+     * país
+     */
+    public void horasPais(){
        System.out.println("Qual é o id do Pais ");
        String zona= Input.lerStringZona();
        model.horasPais(zona);
-   }    
+   }  
+     /**
+     * Esta função usa a função diferençaHoras() da classe Model para calcular a diferença de horas 
+     * entre determinado dois determinados países
+     */
    public void diferençaHoras(){
       System.out.println("Qual é o id do Pais 1 ");
        String zona= Input.lerStringZona();
@@ -114,6 +62,11 @@ public class Controller {
        String zona2= Input.lerStringZona();
        model.diferençaHoras(zona,zona2);
    }
+    /**
+     * Esta função usa a função queHorasSerao() da classe Model para calcular que horas serão 
+     * quando aterrar 
+     * 
+     */
    public void queHorasSerao(){
        int year =0;
        Month month = Month.JANUARY;
@@ -152,10 +105,92 @@ public class Controller {
         
         model.queHorasSerao(year, month, day, hora, minutos, zonaP, zonaC, horaV, minutosV);
    }
+    
+    
+    
+    //Metodos Agenda
+    
+    
+    
+    
+    //-----------------------------Flows-----------------------------------------------------
+    
+    //Flow principal
+   
+    /**
+     * Esta função delinha o flow inicial da aplicação
+     */
+     public void startFlow () {
+        Menu menu=all.getMenu(1);
+        String opcao;
+        do {
+            menu.show();
+            opcao = Input.lerString(); 
+            opcao = opcao.toUpperCase();
+            switch(opcao) {
+                case "C" : calcFlow(); break;
+                case "F" : fusoFlow(); break;
+                case "A" : agendaFlow();break;
+                case "S": break;
+                default: System.out.println("Opcão Inválida !"); break;
+            }
+        }
+        while(!opcao.equals("S"));    
+   } 
+     
+    //Flows Calc
+     
+     /**
+     * Esta função delinha o flow inicial do modelo Calc ( modelo da calculadora universal)
+     */
+     public void calcFlow () {
+        Menu menu=all.getMenu(1);
+        String opcao;
+        do {
+            menu.show();
+            opcao = Input.lerString(); 
+            opcao = opcao.toUpperCase();
+            switch(opcao) {
+                case "S": break;
+                default: System.out.println("Opcão Inválida !"); break;
+            }
+        }
+        while(!opcao.equals("S"));    
+   }
+     
+     
+    //Flows Fuso Horario
+     
+     /**
+     * Esta função delinha o flow inicial do modelo fuso Horário
+     */
+     
+     public void fusoFlow () {
+        Menu menu=all.getMenu(20);
+        String opcao;
+        do {
+            menu.show();
+            opcao = Input.lerString(); 
+            opcao = opcao.toUpperCase();
+            switch(opcao) {
+                case "Z": horasPais();break;
+                case "D": diferençaHoras();break;
+                case "Q": queHorasSerao();break;
+                case "S": break;
+                default: System.out.println("Opcão Inválida !"); break;
+            }
+        }
+        while(!opcao.equals("S"));    
+   }
+   
         
      
      
     //Flows Agenda
+     
+     /**
+     * Esta função delinha o flow inicial do modelo Agenda
+     */
      
      public void agendaFlow () {
         Menu menu=all.getMenu(1);

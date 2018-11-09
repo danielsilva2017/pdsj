@@ -53,4 +53,13 @@ public class OtherFunctions {
         }
         return x;
     }
+    public static void fromSecondsToHours(long i){
+        if(i<0){
+            i=i*-1;
+        }
+        long hours = i/3600;
+        long rest = i-(hours*3600);
+        long minutes=rest/60;
+        System.out.println("Horas "+hours +" e minutos "+minutes);
+    }
 }
