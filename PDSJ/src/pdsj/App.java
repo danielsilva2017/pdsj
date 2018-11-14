@@ -17,14 +17,16 @@ import java.util.TreeMap;
 * Esta é a classe Main a que inicia a aplicação
 */
 public class App {
-    public  static  String formatDate="Common";    
+    public  static  String formatDate="Common";
+    public static final int startingHour = 10; //hora a que podem começar os appointments
+    public static final int endHour = 20; //hora a que podem começar os appointments
     /**
      * Esta função lê o ficheiro de configuração inicial que o utilizador modificar e inicia as 
      * configurações da aplicação de acordo com esse ficheiro de configuração
      * @throws IOException se o ficheiro de configuração não for encontrado
      */
     public static void readFile()throws IOException{
-        String fileName = "C:\\Users\\silva\\Desktop\\mei\\pdsj\\trabalho\\pdsj\\conf.txt";
+        String fileName = System.getProperty("user.dir")+"\\conf.txt";
         FileReader fileReader = new FileReader(fileName);
         String [] lines = new String[10];
 
