@@ -15,14 +15,16 @@ import java.time.ZonedDateTime;
 import static java.time.temporal.ChronoUnit.MINUTES;
 import static java.time.temporal.ChronoUnit.HOURS;
 import java.time.temporal.TemporalUnit;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.TreeSet;
 import static pdsj.OtherFunctions.fashionPrint;
 import static pdsj.OtherFunctions.fromSecondsToHours;
 
-/**
- *
- * @author silva
- */
 public class Model {
+    
+    private HashMap<LocalDate, TreeSet<Appointment>> appointments;
+    
     //Funçoes controller1
     
     public void test(){
@@ -30,6 +32,13 @@ public class Model {
         
     }
     
+    public void fazerMarcacao(int year,Month month,int day, LocalTime startingHour, LocalTime finishingHour){
+        LocalDate appointmentDay = LocalDate.of(year, month, day);
+        if (!appointments.containsKey(appointmentDay)) appointments.put(appointmentDay, new TreeSet<>());
+        TreeSet<Appointment> values = appointments.get(appointmentDay);
+        values.add(new Appointment(appointmentDay, startingHour, finishingHour));
+        appointments.put(appointmentDay, values);
+    }
     //Funçoes controller2
     
     public void test2(){
