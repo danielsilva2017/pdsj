@@ -17,9 +17,6 @@ import java.util.TreeMap;
 * Esta é a classe Main a que inicia a aplicação
 */
 public class App {
-    public  static  String formatDate="Common";
-    public static final int startingHour = 10; //hora a que podem começar os appointments
-    public static final int endHour = 20; //hora a que podem começar os appointments
     /**
      * Esta função lê o ficheiro de configuração inicial que o utilizador modificar e inicia as 
      * configurações da aplicação de acordo com esse ficheiro de configuração
@@ -29,7 +26,6 @@ public class App {
         String fileName = System.getProperty("user.dir")+"\\conf.txt";
         FileReader fileReader = new FileReader(fileName);
         String [] lines = new String[10];
-
         try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             String line;
             int i =0;
@@ -39,8 +35,9 @@ public class App {
             }
              
         }
-        formatDate=lines[1];
+        Configs.formatDate=lines[1];
     }
+    
     /**
      * Esta função executa a aplicação
      * @param args not used here

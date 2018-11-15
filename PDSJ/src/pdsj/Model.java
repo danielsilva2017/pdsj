@@ -15,15 +15,15 @@ import java.time.ZonedDateTime;
 import static java.time.temporal.ChronoUnit.MINUTES;
 import static java.time.temporal.ChronoUnit.HOURS;
 import java.time.temporal.TemporalUnit;
-import java.util.HashMap;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import static pdsj.OtherFunctions.fashionPrint;
 import static pdsj.OtherFunctions.fromSecondsToHours;
 
 public class Model {
     
-    private HashMap<LocalDate, TreeSet<Appointment>> appointments;
+    private TreeMap<LocalDate, TreeMap<LocalTime, Appointment>> appointments;
     
     //Funçoes controller1
     
@@ -32,12 +32,51 @@ public class Model {
         
     }
     
-    public void fazerMarcacao(int year,Month month,int day, LocalTime startingHour, LocalTime finishingHour){
-        LocalDate appointmentDay = LocalDate.of(year, month, day);
-        if (!appointments.containsKey(appointmentDay)) appointments.put(appointmentDay, new TreeSet<>());
-        TreeSet<Appointment> values = appointments.get(appointmentDay);
-        values.add(new Appointment(appointmentDay, startingHour, finishingHour));
+    /**
+     * Esta função adiciona uma nova marcação, de meia hora à lista de marcações
+     * @param appointmentDay dia da marcação
+     * @param startingHour hora a que a marcação começa
+     * @param description descrição da marcação
+     */
+    public void makeAppointment(LocalDate appointmentDay, LocalTime startingHour, String description){
+        if (!appointments.containsKey(appointmentDay)) appointments.put(appointmentDay, new TreeMap<>());
+        TreeMap<LocalTime, Appointment> values = appointments.get(appointmentDay);
+        values.put(startingHour, new Appointment(appointmentDay, startingHour, startingHour.plusMinutes(30), description));
         appointments.put(appointmentDay, values);
+    }
+    /**
+     * Esta função devolve as marcações de um determinado dia
+     * @param date data das marcações a retornar
+     * @return mapa das marcações do dia
+     */
+    public TreeMap<LocalTime, Appointment> seeAppointments(LocalDate date){
+        return appointments.get(date);
+    }
+    /**
+     * Esta função elimina uma marcação
+     * @param date data da marcação a eliminar
+     * @param startTime hora de início da marcação
+     */
+    public void deleteApppointment(LocalDate date, LocalTime startTime){
+        TreeMap<LocalTime, Appointment> values = appointments.get(date);
+        values.remove(startTime);
+        appointments.put(date, values);
+    }
+    /**
+     * Esta função verifica se já existe uma marcação num determinado intervalo de horas
+     * @param day data da marcação a eliminar
+     * @param startTime hora de início do intervalo a verificar
+     * @param endTime hora do fim do intervalo a verificar
+     * @return true se não houver nenhuma marcação no intervalo, false se houver
+     */
+    public boolean verifyAppointmentAvailability(LocalDate day, LocalTime startTime, LocalTime endTime){
+       TreeMap<LocalTime, Appointment> values = appointments.get(day);
+       while (startTime != endTime){
+           LocalTime newStartTime = endTime.minusMinutes(30);
+           if (values.containsKey(newStartTime)) return false;
+           endTime = newStartTime;
+       }
+       return true;
     }
     //Funçoes controller2
     
