@@ -6,7 +6,10 @@
 package pdsj;
 import static java.lang.System.out;
 import static java.lang.System.in;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeParseException;
 import java.time.zone.ZoneRulesException;
 import java.util.Scanner;
 import java.util.InputMismatchException;
@@ -153,6 +156,44 @@ public class Input {
      }
      //input.close();
      return s;
-  }  
+  }
+  
+  public static String lerData(){
+      Scanner input = new Scanner(in);
+      boolean ok = false;
+      String s = "";
+      while(!ok){
+            try {
+                s = input.nextLine();
+                LocalDate.parse(s);
+                ok = true;
+            } 
+            catch(InputMismatchException | DateTimeParseException e){
+               out.println("Data invalida"); 
+               out.print("Novo valor: ");
+               input.nextLine(); 
+            }
+      }
+      return s;
+  }
+  
+  public static String lerHora(){
+      Scanner input = new Scanner(in);
+      boolean ok = false;
+      String s = "";
+      while(!ok){
+            try {
+                s = input.nextLine();
+                LocalTime curr = LocalTime.parse(s);
+                if (!(curr.isBefore(LocalTime.of(Configs.startingHour, 00)) || curr.isAfter(LocalTime.of(Configs.endHour, 00)))) ok = true;
+            } 
+            catch(InputMismatchException | DateTimeParseException e){
+               out.println("Hora invalida"); 
+               out.print("Novo valor: ");
+               input.nextLine(); 
+            }
+      }
+      return s;
+  }
   
 }

@@ -14,16 +14,17 @@ import java.util.Objects;
  *
  * @author toman
  */
-public class Appointment{
+public class Appointment implements Comparable<Appointment>{
     private LocalDate day;
     private LocalTime start;
     private LocalTime end;
     private String description;
 
-    public Appointment(LocalDate day, LocalTime start, LocalTime end) {
+    public Appointment(LocalDate day, LocalTime start, LocalTime end, String description) {
         this.day = day;
         this.start = start;
         this.end = end;
+        this.description = description;
     }
 
     public LocalDate getDay() {
@@ -91,7 +92,15 @@ public class Appointment{
 
     @Override
     public String toString() {
-        return "Appointment: " + description + ". " + day.getDayOfWeek() + ", " + day.format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) + ", from " + start + " to " + end + ".";
+        if (Configs.formatDate.equals("common")){
+            return "Appointment: " + description + ". " + day.getDayOfWeek() + ", " + day.format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) + ", from " + start + " to " + end + ".";
+        } else {
+            return "Appointment: " + description + ". " + day.getDayOfWeek() + ", " + day.format(DateTimeFormatter.ofPattern("yyyy MMMM dd")) + ", from " + start + " to " + end + ".";
+        }
     }
-    
+
+    @Override
+    public int compareTo(Appointment o) {
+        return this.start.compareTo(o.getStart());
+    }
 }
