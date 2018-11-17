@@ -52,7 +52,12 @@ public class View {
         
         
         //Agenda
-        
+        op1 = new Opcao("Fazer marcação ", "F");
+        op2 = new Opcao("Ver marcações ", "V");
+        op3 = new Opcao("Eliminar marcações ", "E"); 
+        List<Opcao> linhas30 = Arrays.asList(op1, op2, op3);
+        Menu menu30 = new Menu(linhas30, "   Menu principal da Agenda");        
+        menusSIGCA.addMenu(30, menu30);
         
         
         

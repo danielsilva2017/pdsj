@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
-import java.time.zone.ZoneRulesException;
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
@@ -174,7 +173,7 @@ public class Input {
             try {
                 s = input.nextLine();
                 LocalTime curr = LocalTime.parse(s);
-                if (!(curr.isBefore(LocalTime.of(Configs.startingHour, 00)) || curr.isAfter(LocalTime.of(Configs.endHour, 00)))) ok = true;
+                ok=true;
             } 
             catch(InputMismatchException | DateTimeParseException e){
                out.println("Hora invalida"); 
@@ -184,4 +183,15 @@ public class Input {
       return s;
   }
   
+  
+  public static LocalTime lerHoraMarcacao(){
+      String hora = lerHora();
+      LocalTime curr = LocalTime.parse(hora);
+      while (curr.isBefore(LocalTime.of(Configs.startingHour, 00)) || curr.isAfter(LocalTime.of(Configs.endHour, 00))){
+          out.println("Hora inválida. Apenas entre as 10:00 e as 20:00");
+          out.println("Novo valor: ");  
+          curr = LocalTime.parse(hora);
+      }
+      return curr;
+  }
 }

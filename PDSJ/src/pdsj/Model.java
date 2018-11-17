@@ -12,18 +12,13 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import static java.time.temporal.ChronoUnit.MINUTES;
-import static java.time.temporal.ChronoUnit.HOURS;
-import java.time.temporal.TemporalUnit;
-import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
 import static pdsj.OtherFunctions.fashionPrint;
 import static pdsj.OtherFunctions.fromSecondsToHours;
 
 public class Model {
     
-    private TreeMap<LocalDate, TreeMap<LocalTime, Appointment>> appointments;
+    private TreeMap<LocalDate, TreeMap<LocalTime, Appointment>> marcacoes;
     
     //Funçoes controller1
     
@@ -34,47 +29,47 @@ public class Model {
     
     /**
      * Esta função adiciona uma nova marcação, de meia hora à lista de marcações
-     * @param appointmentDay dia da marcação
-     * @param startingHour hora a que a marcação começa
-     * @param description descrição da marcação
+     * @param dia dia da marcação
+     * @param horaInicio hora a que a marcação começa
+     * @param descricao descrição da marcação
      */
-    public void makeAppointment(LocalDate appointmentDay, LocalTime startingHour, String description){
-        if (!appointments.containsKey(appointmentDay)) appointments.put(appointmentDay, new TreeMap<>());
-        TreeMap<LocalTime, Appointment> values = appointments.get(appointmentDay);
-        values.put(startingHour, new Appointment(appointmentDay, startingHour, startingHour.plusMinutes(30), description));
-        appointments.put(appointmentDay, values);
+    public void makeAppointment(LocalDate dia, LocalTime horaInicio, String descricao){
+        if (!marcacoes.containsKey(dia)) marcacoes.put(dia, new TreeMap<>());
+        TreeMap<LocalTime, Appointment> valores = marcacoes.get(dia);
+        valores.put(horaInicio, new Appointment(dia, horaInicio, horaInicio.plusMinutes(30), descricao));
+        marcacoes.put(dia, valores);
     }
     /**
      * Esta função devolve as marcações de um determinado dia
-     * @param date data das marcações a retornar
+     * @param dia data das marcações a retornar
      * @return mapa das marcações do dia
      */
-    public TreeMap<LocalTime, Appointment> seeAppointments(LocalDate date){
-        return appointments.get(date);
+    public TreeMap<LocalTime, Appointment> seeAppointments(LocalDate dia){
+        return marcacoes.get(dia);
     }
     /**
      * Esta função elimina uma marcação
-     * @param date data da marcação a eliminar
-     * @param startTime hora de início da marcação
+     * @param dia data da marcação a eliminar
+     * @param horaInicio hora de início da marcação
      */
-    public void deleteApppointment(LocalDate date, LocalTime startTime){
-        TreeMap<LocalTime, Appointment> values = appointments.get(date);
-        values.remove(startTime);
-        appointments.put(date, values);
+    public void deleteApppointment(LocalDate dia, LocalTime horaInicio){
+        TreeMap<LocalTime, Appointment> valores = marcacoes.get(dia);
+        valores.remove(horaInicio);
+        marcacoes.put(dia, valores);
     }
     /**
      * Esta função verifica se já existe uma marcação num determinado intervalo de horas
-     * @param day data da marcação a eliminar
-     * @param startTime hora de início do intervalo a verificar
-     * @param endTime hora do fim do intervalo a verificar
+     * @param dia data da marcação a eliminar
+     * @param horaInicio hora de início do intervalo a verificar
+     * @param horaFim hora do fim do intervalo a verificar
      * @return true se não houver nenhuma marcação no intervalo, false se houver
      */
-    public boolean verifyAppointmentAvailability(LocalDate day, LocalTime startTime, LocalTime endTime){
-       TreeMap<LocalTime, Appointment> values = appointments.get(day);
-       while (startTime != endTime){
-           LocalTime newStartTime = endTime.minusMinutes(30);
+    public boolean verificarDisponibilidadeMarcacao(LocalDate dia, LocalTime horaInicio, LocalTime horaFim){
+       TreeMap<LocalTime, Appointment> values = marcacoes.get(dia);
+       while (horaInicio != horaFim){
+           LocalTime newStartTime = horaFim.minusMinutes(30);
            if (values.containsKey(newStartTime)) return false;
-           endTime = newStartTime;
+           horaFim = newStartTime;
        }
        return true;
     }
