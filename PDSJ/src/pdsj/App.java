@@ -17,17 +17,15 @@ import java.util.TreeMap;
 * Esta é a classe Main a que inicia a aplicação
 */
 public class App {
-    public  static  String formatDate="Common";    
     /**
      * Esta função lê o ficheiro de configuração inicial que o utilizador modificar e inicia as 
      * configurações da aplicação de acordo com esse ficheiro de configuração
      * @throws IOException se o ficheiro de configuração não for encontrado
      */
     public static void readFile()throws IOException{
-        String fileName = "C:\\Users\\silva\\Desktop\\mei\\pdsj\\trabalho\\pdsj\\conf.txt";
+        String fileName = System.getProperty("user.dir")+"\\conf.txt";
         FileReader fileReader = new FileReader(fileName);
         String [] lines = new String[10];
-
         try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             String line;
             int i =0;
@@ -37,8 +35,9 @@ public class App {
             }
              
         }
-        formatDate=lines[1];
+        Configs.formatDate=lines[1];
     }
+    
     /**
      * Esta função executa a aplicação
      * @param args not used here

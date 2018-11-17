@@ -6,8 +6,11 @@
 package pdsj;
 import static java.lang.System.out;
 import static java.lang.System.in;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
-import java.time.zone.ZoneRulesException;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
@@ -31,33 +34,25 @@ public class Input {
          catch(InputMismatchException e) 
              { out.println("Texto Invalido"); 
                out.print("Novo valor: ");
-               input.nextLine(); 
              }
      }
      //input.close();
      return txt;
   } 
   public static String lerStringZona() {
-     Scanner input = new Scanner(in);
-     boolean ok = false; 
-     String txt = "";
-     while(!ok) {
-         try {
-             txt = input.nextLine();
-             
+      Scanner input = new Scanner(in);
+      boolean ok = false;
+      String txt = "";
+      while(!ok){
+           try {
+              txt = input.nextLine();
              ZoneId zone= ZoneId.of(txt);
-             
-             
-             ok = true;
-         }
-         catch(ZoneRulesException e) 
-             { out.println("Zona Invalida"); 
-               out.println("Novo valor: ");
-               input.nextLine(); 
-             }
-     }
-     //input.close();
-     return txt;
+              ok = true;
+          } catch (DateTimeException e) {
+             out.println("Zona Invalida \n"+ "Novo valor:"); 
+          }
+      }
+      return txt;
   } 
  
  public static int lerInt() {
@@ -72,7 +67,7 @@ public class Input {
          catch(InputMismatchException e) 
              { out.println("Inteiro Invalido"); 
                out.print("Novo valor: ");
-               input.nextLine(); 
+             
              }
      }
      //input.close();
@@ -91,7 +86,6 @@ public class Input {
          catch(InputMismatchException e) 
              { out.println("Valor real Invalido"); 
                out.print("Novo valor: ");
-               input.nextLine(); 
              }
      }
      //input.close();
@@ -110,7 +104,7 @@ public class Input {
          catch(InputMismatchException e) 
              { out.println("Valor real Invalido"); 
                out.print("Novo valor: ");
-               input.nextLine(); 
+               
              }
      }
      //input.close();
@@ -128,8 +122,7 @@ public class Input {
          }
          catch(InputMismatchException e) 
              { out.println("Booleano Invalido"); 
-               out.print("Novo valor: ");
-               input.nextLine(); 
+               out.print("Novo valor: "); 
              }
      }
      //input.close();
@@ -148,11 +141,46 @@ public class Input {
          catch(InputMismatchException e) 
              { out.println("Short Invalido"); 
                out.print("Novo valor: ");
-               input.nextLine(); 
              }
      }
      //input.close();
      return s;
-  }  
+  }
+  
+  public static String lerData(){
+      Scanner input = new Scanner(in);
+      boolean ok = false;
+      String s = "";
+      while(!ok){
+            try {
+                s = input.nextLine();
+                LocalDate.parse(s);
+                ok = true;
+            } 
+            catch(InputMismatchException | DateTimeParseException e){
+               out.println("Data invalida"); 
+               out.print("Novo valor: ");
+            }
+      }
+      return s;
+  }
+  
+  public static String lerHora(){
+      Scanner input = new Scanner(in);
+      boolean ok = false;
+      String s = "";
+      while(!ok){
+            try {
+                s = input.nextLine();
+                LocalTime curr = LocalTime.parse(s);
+                if (!(curr.isBefore(LocalTime.of(Configs.startingHour, 00)) || curr.isAfter(LocalTime.of(Configs.endHour, 00)))) ok = true;
+            } 
+            catch(InputMismatchException | DateTimeParseException e){
+               out.println("Hora invalida"); 
+               out.print("Novo valor: ");
+            }
+      }
+      return s;
+  }
   
 }

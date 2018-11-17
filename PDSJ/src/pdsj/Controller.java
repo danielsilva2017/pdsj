@@ -5,9 +5,12 @@
  */
 package pdsj;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Month;
 import java.time.ZoneId;
-import static pdsj.App.formatDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import static pdsj.OtherFunctions.parseDate;
 import static pdsj.OtherFunctions.getMonth;
 import static pdsj.OtherFunctions.parseHours;
@@ -74,7 +77,7 @@ public class Controller {
         System.out.println("Insira a data de acordo com a resolução escolhida no ficheiro de configuração");
         String data= Input.lerString();
         String [] date=parseDate(data);
-        if(formatDate=="Common"){
+        if(Configs.formatDate.equals("Common")){
             day = Integer.parseInt(date[0]);
             int auxMonth= Integer.parseInt(date[1]);
             month = getMonth(auxMonth);
@@ -85,10 +88,9 @@ public class Controller {
             int auxMonth= Integer.parseInt(date[1]);
             month = getMonth(auxMonth);
             day= Integer.parseInt(date[2]);
-        }   
-        System.out.println(day+"-"+month+"-"+year);
+        }  
         System.out.println("Insira hora de partida no formato HH:MM");
-        String horaString= Input.lerString();
+        String horaString= Input.lerHora();
         String [] horaStringRes= parseHours(horaString);
         int hora= Integer.parseInt(horaStringRes[0]);
         int minutos=Integer.parseInt(horaStringRes[1]);
@@ -109,9 +111,66 @@ public class Controller {
     
     
     //Metodos Agenda
+    public void adicionarMarcacao(){
+        System.out.println("Insira a data de acordo com o formato escolhido");
+        LocalDate diaMarcacao = LocalDate.parse(Input.lerData());
+        System.out.println("Marcações do dia escolhido");
+        ArrayList<Appointment> appointments=(ArrayList<Appointment>) model.seeAppointments(diaMarcacao).values();
+        for (Appointment a: appointments){
+            System.out.println(a);
+        }
+        System.out.println("Insira a hora a que começa a marcação pretendida (apenas entre as 10:00 e as 20:00, a cada :00 ou :30)");
+        LocalTime horaInicio = LocalTime.parse(Input.lerHora());
+        System.out.println("Insira a hora a que termina a marcação pretendida (apenas entre as 10:00 e as 20:00, a cada :00 ou :30)");
+        LocalTime horaFim = LocalTime.parse(Input.lerHora());
+        System.out.println("Insira a descrição da marcação");
+        String description = Input.lerString();
+        if (horaInicio.getMinute()>30){
+            horaInicio = LocalTime.of(horaInicio.getHour(), 30);
+        } else if (horaInicio.getMinute() < 30) {
+            horaInicio = LocalTime.of(horaInicio.getHour(), 0);
+        }
+        if (horaFim.getMinute()>30){
+            horaFim = LocalTime.of(horaFim.getHour(), 30);
+        } else if (horaFim.getMinute() < 30) {
+            horaFim = LocalTime.of(horaFim.getHour(), 0);
+        }
+        if (model.verifyAppointmentAvailability(diaMarcacao, horaInicio, horaFim)){
+            while (horaInicio != horaFim){
+                LocalTime newHoraInicio = horaFim.minusMinutes(30);
+                model.makeAppointment(diaMarcacao, newHoraInicio, description);
+                horaFim = newHoraInicio;
+            }
+        }
+    }
     
+    public void eliminarMarcacao(){
+        System.out.println("Insira a data de acordo com o formato escolhido");
+        LocalDate diaMarcacao = LocalDate.parse(Input.lerData());
+        System.out.println("Marcações do dia escolhido");
+        ArrayList<Appointment> appointments=(ArrayList<Appointment>) model.seeAppointments(diaMarcacao).values();
+        for (Appointment a: appointments){
+            System.out.println(a);
+        }
+        System.out.println("Insira a hora a que começa a marcação pretendida (apenas entre as 10:00 e as 20:00, a cada :00 ou :30)");
+        LocalTime horaInicio = LocalTime.parse(Input.lerHora());
+        if (horaInicio.getMinute()>30){
+            horaInicio = LocalTime.of(horaInicio.getHour(), 30);
+        } else if (horaInicio.getMinute() < 30) {
+            horaInicio = LocalTime.of(horaInicio.getHour(), 0);
+        }
+        model.deleteApppointment(diaMarcacao, horaInicio);
+    }
     
-    
+    public void verMarcacoes(){
+        System.out.println("Insira a data de acordo com o formato escolhido");
+        LocalDate diaMarcacao = LocalDate.parse(Input.lerData());
+        System.out.println("Marcações do dia escolhido");
+        ArrayList<Appointment> appointments=(ArrayList<Appointment>) model.seeAppointments(diaMarcacao).values();
+        for (Appointment a: appointments){
+            System.out.println(a);
+        }
+    }
     
     //-----------------------------Flows-----------------------------------------------------
     
