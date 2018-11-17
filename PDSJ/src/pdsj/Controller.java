@@ -8,8 +8,6 @@ package pdsj;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import static pdsj.OtherFunctions.parseDate;
 import static pdsj.OtherFunctions.getMonth;
@@ -121,9 +119,9 @@ public class Controller {
             System.out.println(a);
         }
         System.out.println("Insira a hora a que começa a marcação pretendida (apenas entre as 10:00 e as 20:00, a cada :00 ou :30)");
-        LocalTime horaInicio = LocalTime.parse(Input.lerHora());
+        LocalTime horaInicio = Input.lerHoraMarcacao();
         System.out.println("Insira a hora a que termina a marcação pretendida (apenas entre as 10:00 e as 20:00, a cada :00 ou :30)");
-        LocalTime horaFim = LocalTime.parse(Input.lerHora());
+        LocalTime horaFim = Input.lerHoraMarcacao();
         System.out.println("Insira a descrição da marcação");
         String description = Input.lerString();
         if (horaInicio.getMinute()>30){
@@ -136,7 +134,7 @@ public class Controller {
         } else if (horaFim.getMinute() < 30) {
             horaFim = LocalTime.of(horaFim.getHour(), 0);
         }
-        if (model.verifyAppointmentAvailability(diaMarcacao, horaInicio, horaFim)){
+        if (model.verificarDisponibilidadeMarcacao(diaMarcacao, horaInicio, horaFim)){
             while (horaInicio != horaFim){
                 LocalTime newHoraInicio = horaFim.minusMinutes(30);
                 model.makeAppointment(diaMarcacao, newHoraInicio, description);
@@ -154,7 +152,7 @@ public class Controller {
             System.out.println(a);
         }
         System.out.println("Insira a hora a que começa a marcação pretendida (apenas entre as 10:00 e as 20:00, a cada :00 ou :30)");
-        LocalTime horaInicio = LocalTime.parse(Input.lerHora());
+        LocalTime horaInicio = Input.lerHoraMarcacao();
         if (horaInicio.getMinute()>30){
             horaInicio = LocalTime.of(horaInicio.getHour(), 30);
         } else if (horaInicio.getMinute() < 30) {
@@ -253,14 +251,14 @@ public class Controller {
      */
      
      public void agendaFlow () {
-        Menu menu=all.getMenu(1);
+        Menu menu=all.getMenu(30);
         String opcao;
         do {
             menu.show();
             opcao = Input.lerString(); 
             opcao = opcao.toUpperCase();
             switch(opcao) {
-                case "S": break;
+                case "F": break;
                 default: System.out.println("Opcão Inválida !"); break;
             }
         }
