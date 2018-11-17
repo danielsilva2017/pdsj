@@ -6,18 +6,12 @@
 package pdsj;
 import static java.lang.System.out;
 import static java.lang.System.in;
-<<<<<<< fuso
 import java.time.DateTimeException;
-=======
->>>>>>> master
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
-<<<<<<< fuso
-=======
 import java.time.zone.ZoneRulesException;
->>>>>>> master
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
@@ -167,10 +161,6 @@ public class Input {
             catch(InputMismatchException | DateTimeParseException e){
                out.println("Data invalida"); 
                out.print("Novo valor: ");
-<<<<<<< fuso
-=======
-               input.nextLine(); 
->>>>>>> master
             }
       }
       return s;
@@ -189,10 +179,6 @@ public class Input {
             catch(InputMismatchException | DateTimeParseException e){
                out.println("Hora invalida"); 
                out.print("Novo valor: ");
-<<<<<<< fuso
-=======
-               input.nextLine(); 
->>>>>>> master
             }
       }
       return s;
