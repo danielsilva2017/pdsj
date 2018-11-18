@@ -38,8 +38,104 @@ public class Controller {
      //-----------------------------Metodos-----------------------------------------------------
     
     //Metodos Calc
-    
-    
+    /*
+    * Esta função usa contasDatas da classe Model para calcular a diferença 
+    * duas datas
+    */
+    public void datas(){
+        if(Configs.formatDate.equals("Common")){
+            System.out.println("Formato data: dd-mm-yyyy");
+        }
+        else{
+            System.out.println("Formato data: yyyy-mm-dd");
+        }   
+        System.out.println("Insira a data inicial: ");
+        LocalDate data1 = LocalDate.parse(Input.lerData());
+        System.out.println("Insira a data final: ");
+        LocalDate data2 = LocalDate.parse(Input.lerData());
+        model.contasDatas(data1,data2);
+    }
+    /*
+    * Esta função usa contasHoras da classe Model para calcular a diferença 
+    * duas horas
+    */
+    public void horas(){
+        System.out.println("Insira a hora inicial: ");
+        LocalTime hora1 = LocalTime.parse(Input.lerHora());
+        System.out.println("Insira a hora final: ");
+        LocalTime hora2 = LocalTime.parse(Input.lerHora());
+        model.contasHoras(hora1,hora2);
+    }
+    /*
+    * Esta função usa contasDatasHoras da classe Model para calcular a diferença 
+    * duas datas e horas
+    */
+    public void datasHoras(){
+        if(Configs.formatDate.equals("Common")){
+            System.out.println("Formato data: dd-mm-yyyy");
+        }
+        else{
+            System.out.println("Formato data: yyyy-mm-dd");
+        }
+        System.out.println("Insira a data inicial: ");
+        LocalDate data1 = LocalDate.parse(Input.lerData());
+        System.out.println("Insira a hora inicial: ");
+        LocalTime hora1 = LocalTime.parse(Input.lerHora());
+        
+        System.out.println("Insira a data final: ");
+        LocalDate data2 = LocalDate.parse(Input.lerData());
+        System.out.println("Insira a hora final: ");
+        LocalTime hora2 = LocalTime.parse(Input.lerHora());
+        model.contasDatasHoras(data1, data2, hora1, hora2);
+    }
+    /*
+    * Esta função usa addDatas da classe Model para adicionar anos, meses e/ou dias 
+    * a uma data
+    */
+    public void adicionarDatas(){
+        if(Configs.formatDate.equals("Common")){
+            System.out.println("Formato data: dd-mm-yyyy");
+        }
+        else{
+            System.out.println("Formato data: yyyy-mm-dd");
+        }
+        System.out.println("Insira a data inicial: ");
+        LocalDate data = LocalDate.parse(Input.lerData());
+        System.out.println("Insira valores a adicionar: ");
+        System.out.println("  Anos: ");
+        int ano = Input.lerInt();
+        System.out.println("  Meses: ");
+        int mes = Input.lerInt();
+        System.out.println("  Semanas: ");
+        int semana = Input.lerInt();
+        System.out.println("  Dias: ");
+        int dias = Input.lerInt();
+        model.addDatas(data, ano, mes, semana, dias);
+    }
+    /*
+    * Esta função usa subDatas da classe Model para subtrair anos, meses, semanas e/ou dias 
+    * a uma data
+    */
+    public void subtrairDatas(){
+        if(Configs.formatDate.equals("Common")){
+            System.out.println("Formato data: dd-mm-yyyy");
+        }
+        else{
+            System.out.println("Formato data: yyyy-mm-dd");
+        }
+        System.out.println("Insira a data inicial: ");
+        LocalDate data = LocalDate.parse(Input.lerData());
+        System.out.println("Insira valores a adicionar: ");
+        System.out.println("  Anos: ");
+        int ano = Input.lerInt();
+        System.out.println("  Meses: ");
+        int mes = Input.lerInt();
+        System.out.println("  Semanas: ");
+        int semana = Input.lerInt();
+        System.out.println("  Dias: ");
+        int dias = Input.lerInt();
+        model.subDatas(data, ano, mes, semana, dias);
+    }
     
     
     //Metodos Fuso Horario
@@ -202,13 +298,18 @@ public class Controller {
      * Esta função delinha o flow inicial do modelo Calc ( modelo da calculadora universal)
      */
      public void calcFlow () {
-        Menu menu=all.getMenu(1);
+        Menu menu=all.getMenu(10);
         String opcao;
         do {
             menu.show();
             opcao = Input.lerString(); 
             opcao = opcao.toUpperCase();
             switch(opcao) {
+                case "D": datas();break;
+                case "H": horas();break;
+                case "E": datasHoras();break;
+                case "A": adicionarDatas();break;
+                case "B": subtrairDatas(); break;
                 case "S": break;
                 default: System.out.println("Opcão Inválida !"); break;
             }
@@ -259,9 +360,11 @@ public class Controller {
             opcao = opcao.toUpperCase();
             switch(opcao) {
                 case "F": break;
+                case "S": break;
                 default: System.out.println("Opcão Inválida !"); break;
             }
         }
         while(!opcao.equals("S"));    
    }
+
 }

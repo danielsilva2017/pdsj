@@ -10,8 +10,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
+import java.time.Period;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.TreeMap;
 import static pdsj.OtherFunctions.fashionPrint;
 import static pdsj.OtherFunctions.fromSecondsToHours;
@@ -132,5 +134,109 @@ public class Model {
     public void test3(){
         System.out.println("view3");
     }
-    
+    /**
+     * Esta função calcula quantos anos, meses e dias existem de diferença entre duas datas.
+     * @param data1 data inicial
+     * @param data2 data final
+     */
+    public void contasDatas(LocalDate data1, LocalDate data2){
+        Period p = Period.between(data1, data2);
+        Period p1 = p.normalized();
+        System.out.println("Diferença de datas -> Anos " + p1.getYears()+ 
+                            "; Meses " + p1.getMonths() + "; Dias " + p1.getDays());
+    }
+    /**
+     * Esta função calcula quantas horas, minutos e seguntos existem de diferença entre duas horas.
+     * @param hora1 hora inicial
+     * @param hora2 hora final
+     */
+    public void contasHoras(LocalTime hora1, LocalTime hora2){
+        int h = 0;
+        int m = 0;
+        int s = 0;
+        
+        
+        if(hora1.getHour() > hora2.getHour())
+            h = hora1.getHour() - hora2.getHour();
+        else
+            h = hora2.getHour() - hora1.getHour();
+        
+        if(hora1.getMinute() > hora2.getMinute())
+            m = hora1.getMinute() - hora2.getMinute();
+        else
+            m = hora2.getMinute() - hora1.getMinute();
+        
+        if(hora1.getSecond() > hora2.getSecond())
+            s = hora1.getSecond() - hora2.getSecond();
+        else
+            s = hora2.getSecond() - hora1.getSecond();
+        
+        
+        
+        LocalTime ht = LocalTime.of(h, m, s);
+        System.out.println("Diferença de datas -> Horas " + ht.getHour() + 
+                            "; Minutos " + ht.getMinute() + "; Segundos " + ht.getSecond());
+    }
+    /**
+     * Esta função calcula quantos anos, meses, dias, horas, minutos e seguntos existem 
+     * de diferença entre duas datas com as horas associadas.
+     * @param data1 data inicial
+     * @param data2 data final
+     * @param hora1 hora inicial
+     * @param hora2 hora final
+     */
+    public void contasDatasHoras(LocalDate data1, LocalDate data2, LocalTime hora1, LocalTime hora2){
+        Period p = Period.between(data1, data2);
+        Period p1 = p.normalized();
+        
+        int h = 0;
+        int m = 0;
+        int s = 0;
+        
+        if(hora1.getHour() > hora2.getHour())
+            h = hora1.getHour() - hora2.getHour();
+        else
+            h = hora2.getHour() - hora1.getHour();
+        
+        if(hora1.getMinute() > hora2.getMinute())
+            m = hora1.getMinute() - hora2.getMinute();
+        else
+            m = hora2.getMinute() - hora1.getMinute();
+        
+        if(hora1.getSecond() > hora2.getSecond())
+            s = hora1.getSecond() - hora2.getSecond();
+        else
+            s = hora2.getSecond() - hora1.getSecond();
+        
+        
+        LocalTime ht = LocalTime.of(h, m, s);
+        System.out.println("Diferença de datas -> Anos " + p1.getYears()+ 
+                            "; Meses " + p1.getMonths() + "; Dias " + p1.getDays() + ";\n "
+                         + "                     Horas " + ht.getHour() + 
+                            "; Minutos " + ht.getMinute() + "; Segundos " + ht.getSecond());
+    }
+    /**
+     * Esta função adiciona valores a uma data.
+     * @param data data original
+     * @param ano quantidade de anos a adicionar à data
+     * @param mes quantidade de meses a adicionar à data
+     * @param dias quantidade de dias a adicionar à data
+     */
+    public void addDatas(LocalDate data, int ano, int mes, int semana, int dias){
+        LocalDate data2 = data.plusYears(ano).plusMonths(mes).plusWeeks(semana).plusDays(dias);
+        System.out.println("Nova data -> Ano " + data2.getYear() + 
+                            "; Mês " + data2.getMonth() + "; Dia " + data2.getDayOfMonth());
+    }
+    /**
+    * Esta função subtraí valores a uma data.
+    * @param data data original
+    * @param ano quantidade de anos a subtrair à data
+    * @param mes quantidade de meses a subtrair à data
+    * @param dias quantidade de dias a subtrair à data
+    */
+    public void subDatas(LocalDate data, int ano, int mes, int semana, int dias){
+        LocalDate data2 = data.minusYears(ano).minusMonths(mes).minusWeeks(semana).minusDays(dias);
+        System.out.println("Nova data -> Ano " + data2.getYear() + 
+                            "; Mês " + data2.getMonth() + "; Dia " + data2.getDayOfMonth());
+    }
 }
