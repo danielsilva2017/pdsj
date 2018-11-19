@@ -122,7 +122,6 @@ public class Model {
         ZoneId fusoN2=ZoneId.of(zoneId2);
         ZonedDateTime nowz = ZonedDateTime.of(now,fusoN);
         ZonedDateTime nowz2 = ZonedDateTime.of(now2,fusoN2);
-        System.out.println(nowz + "  " + nowz2);
         Duration x = Duration.between(nowz,nowz2);
           long a = x.getSeconds();
         fromSecondsToHours(a);
