@@ -77,12 +77,14 @@ public class OtherFunctions {
      * 
      */
     public static void fromSecondsToHours(long i){
+        String a = "mais";
         if(i<0){
             i=i*-1;
+            a="menos";
         }
         long hours = i/3600;
         long rest = i-(hours*3600);
         long minutes=rest/60;
-        System.out.println("A diferença horária é de "+hours +" horas e "+minutes+" minutos");
+        System.out.println("A diferença horária é de "+a+" "+hours +" horas e "+minutes+" minutos");
     }
 }

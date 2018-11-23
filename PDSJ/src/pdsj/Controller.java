@@ -144,7 +144,7 @@ public class Controller {
      * país
      */
     public void horasPais(){
-       System.out.println("Qual é o id do Pais ");
+       System.out.println("Qual é o id do Pais? ");
        String zona= Input.lerStringZona();
        model.horasPais(zona);
    }  
@@ -153,9 +153,9 @@ public class Controller {
      * entre determinado dois determinados países
      */
    public void diferençaHoras(){
-      System.out.println("Qual é o id do Pais 1 ");
+      System.out.println("Qual é o id do Pais 1? ");
        String zona= Input.lerStringZona();
-       System.out.println("Qual é o id do Pais 2 ");
+       System.out.println("Qual é o id do Pais 2?");
        String zona2= Input.lerStringZona();
        model.diferençaHoras(zona,zona2);
    }
@@ -182,8 +182,7 @@ public class Controller {
             int auxMonth= Integer.parseInt(date[1]);
             month = getMonth(auxMonth);
             day= Integer.parseInt(date[2]);
-        }   
-        System.out.println(day+"-"+month+"-"+year);
+        }
         System.out.println("Insira hora de partida no formato HH:MM");
         String horaString= Input.lerString();
         String [] horaStringRes= parseHours(horaString);
