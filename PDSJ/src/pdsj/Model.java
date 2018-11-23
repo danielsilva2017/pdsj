@@ -101,7 +101,7 @@ public class Model {
     }
     /**
      * Esta função calcula as horas num certo país
-     * @param zoneID zona do país  
+     * @param zoneId zona do país  
      * @see ZoneId#of(java.lang.String) 
      * @see ZonedDateTime#of(java.time.LocalDateTime, java.time.ZoneId) 
      * 
@@ -117,11 +117,10 @@ public class Model {
     }
     /**
      * Esta função calcula a diferença de horas entre dois países
-     * @param zoneID zona do país 1
-     * @param zoneID2 zona do país 2
+     * @param zoneId zona do país 1
+     * @param zoneId2 zona do país 2
      * @see ZoneId#of(java.lang.String) 
-     * @see ZonedDateTime#of(java.time.LocalDateTime, java.time.ZoneId) 
-     * @see Duration#of(java.time.Duration)
+     * @see ZonedDateTime#of(java.time.LocalDateTime, java.time.ZoneId) va.time.Duration)
      * 
      */
     public void  diferençaHoras(String zoneId,String zoneId2){
@@ -226,6 +225,7 @@ public class Model {
      * @param ano quantidade de anos a adicionar à data
      * @param mes quantidade de meses a adicionar à data
      * @param dias quantidade de dias a adicionar à data
+     * @param semana quantidade de semanas a adicionar à data
      */
     public void addDatas(LocalDate data, int ano, int mes, int semana, int dias){
         LocalDate data2 = data.plusYears(ano).plusMonths(mes).plusWeeks(semana).plusDays(dias);
@@ -238,6 +238,7 @@ public class Model {
     * @param ano quantidade de anos a subtrair à data
     * @param mes quantidade de meses a subtrair à data
     * @param dias quantidade de dias a subtrair à data
+    * @param semana quantidade de semanas a adicionar à data
     */
     public void subDatas(LocalDate data, int ano, int mes, int semana, int dias){
         LocalDate data2 = data.minusYears(ano).minusMonths(mes).minusWeeks(semana).minusDays(dias);
