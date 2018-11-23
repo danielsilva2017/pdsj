@@ -24,10 +24,6 @@ public class Model {
     
     //Funçoes controller1
     
-    public void test(){
-        System.out.println("view1");
-        
-    }
     
     /**
      * Esta função adiciona uma nova marcação, de meia hora à lista de marcações
@@ -77,12 +73,8 @@ public class Model {
     }
     //Funçoes controller2
     
-    public void test2(){
-        System.out.println("view2");
-    }
     /**
-     * Esta função usa a função queHorasSerao() da classe Model para calcular que horas serão 
-     * quando aterrar.
+     * Esta função calcula que horas serão quando o avião aterrar
      * @param year ano da viagem de partida
      * @param month mes da viagem de partida
      * @param day dia da viagem de partida
@@ -107,6 +99,14 @@ public class Model {
         fashionPrint(chegada);
         
     }
+    /**
+     * Esta função calcula as horas num certo país
+     * @param zoneID zona do país  
+     * @see ZoneId#of(java.lang.String) 
+     * @see ZonedDateTime#of(java.time.LocalDateTime, java.time.ZoneId) 
+     * 
+     * 
+     */
     public void horasPais(String zoneId){
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of(zoneId));
         LocalDate data = now.toLocalDate();
@@ -115,6 +115,15 @@ public class Model {
         System.out.println("Sao "+horas+" em "+id+" na data "+data);
         
     }
+    /**
+     * Esta função calcula a diferença de horas entre dois países
+     * @param zoneID zona do país 1
+     * @param zoneID2 zona do país 2
+     * @see ZoneId#of(java.lang.String) 
+     * @see ZonedDateTime#of(java.time.LocalDateTime, java.time.ZoneId) 
+     * @see Duration#of(java.time.Duration)
+     * 
+     */
     public void  diferençaHoras(String zoneId,String zoneId2){
         LocalDateTime now = LocalDateTime.now();
         ZoneId fusoN=ZoneId.of(zoneId);
@@ -130,9 +139,6 @@ public class Model {
     
     //Funçoes controller3
     
-    public void test3(){
-        System.out.println("view3");
-    }
     /**
      * Esta função calcula quantos anos, meses e dias existem de diferença entre duas datas.
      * @param data1 data inicial
