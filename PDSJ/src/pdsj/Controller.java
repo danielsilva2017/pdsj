@@ -168,7 +168,7 @@ public class Controller {
        int year =0;
        Month month = Month.JANUARY;
        int day =0;
-        System.out.println("Insira a data de acordo com a resolução escolhida no ficheiro de configuração");
+        System.out.println("Insira a data de acordo com a resolução escolhida no ficheiro de configuração :");
         String data= Input.lerString();
         String [] date=parseDate(data);
         if(Configs.formatDate.equals("Common")){
@@ -183,16 +183,16 @@ public class Controller {
             month = getMonth(auxMonth);
             day= Integer.parseInt(date[2]);
         }
-        System.out.println("Insira hora de partida no formato HH:MM");
+        System.out.println("Insira hora de partida no formato HH:MM :");
         String horaString= Input.lerString();
         String [] horaStringRes= parseHours(horaString);
         int hora= Integer.parseInt(horaStringRes[0]);
         int minutos=Integer.parseInt(horaStringRes[1]);
-        System.out.println("Insira zona de partida");
+        System.out.println("Insira zona de partida :");
         String zonaP= Input.lerStringZona();
-        System.out.println("Insira zona de chegada");
+        System.out.println("Insira zona de chegada :");
         String zonaC= Input.lerStringZona();
-        System.out.println("Insira a duração da viagem  no formato HH:MM");
+        System.out.println("Insira a duração da viagem  no formato HH:MM :");
         String horaVString= Input.lerString();
         String [] horaVStringRes= parseHours(horaVString);
         int horaV= Integer.parseInt(horaVStringRes[0]);
