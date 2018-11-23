@@ -197,7 +197,6 @@ public class Controller {
         String [] horaVStringRes= parseHours(horaVString);
         int horaV= Integer.parseInt(horaVStringRes[0]);
         int minutosV= Integer.parseInt(horaVStringRes[1]);
-        System.out.println(year+""+ ""+month+ day+ hora+minutos+zonaP+zonaC+horaV+minutosV);
         
         model.queHorasSerao(year, month, day, hora, minutos, zonaP, zonaC, horaV, minutosV);
    }
