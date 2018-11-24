@@ -53,8 +53,9 @@ public class View {
         op1 = new Opcao("Zona Globo ........... ", "Z");
         op2 = new Opcao("Diferença de Horas ... ", "D");
         op3 = new Opcao("Que horas serao? ..... ", "Q"); 
-        op4 = new Opcao("Menu Principal >>>>>>> ", "S"); 
-        List<Opcao> linhas20 = Arrays.asList(op1, op2, op3, op4);
+        op4 = new Opcao("Duracao de Voo........ ", "V");
+        op5 = new Opcao("Menu Principal >>>>>>> ", "S"); 
+        List<Opcao> linhas20 = Arrays.asList(op1, op2, op3, op4,op5);
         Menu menuAlunos20 = new Menu(linhas20, "   Menu principal do Fuso");        
         menusSIGCA.addMenu(20, menuAlunos20);
         

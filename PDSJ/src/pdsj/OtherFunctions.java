@@ -76,7 +76,7 @@ public class OtherFunctions {
      * @param i número de segundos
      * 
      */
-    public static void fromSecondsToHours(long i){
+    public static void fromSecondsToHours(long i,char v){
         String a = "mais";
         if(i<0){
             i=i*-1;
@@ -85,6 +85,11 @@ public class OtherFunctions {
         long hours = i/3600;
         long rest = i-(hours*3600);
         long minutes=rest/60;
-        System.out.println("A diferença horária é de "+a+" "+hours +" horas e "+minutes+" minutos");
+         switch(v) {
+                case 'a':System.out.println("A diferença horária é de "+a+" "+hours +" horas e "+minutes+" minutos"); break;
+                case 'b':System.out.println("A duração do voo é de "+hours+" horas e "+minutes+" minutos."); break;
+                default: break;
+            }
+        
     }
 }

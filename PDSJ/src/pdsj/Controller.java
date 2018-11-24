@@ -5,10 +5,14 @@
  */
 package pdsj;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import static pdsj.OtherFunctions.fashionPrint;
+import static pdsj.OtherFunctions.fromSecondsToHours;
 import static pdsj.OtherFunctions.parseDate;
 import static pdsj.OtherFunctions.getMonth;
 import static pdsj.OtherFunctions.parseHours;
@@ -146,7 +150,8 @@ public class Controller {
     public void horasPais(){
        System.out.println("Qual é o id do Pais? ");
        String zona= Input.lerStringZona();
-       model.horasPais(zona);
+       String x =model.horasPais(zona);
+        System.out.println(x);
    }  
      /**
      * Esta função usa a função diferençaHoras() da classe Model para calcular a diferença de horas 
@@ -157,7 +162,68 @@ public class Controller {
        String zona= Input.lerStringZona();
        System.out.println("Qual é o id do Pais 2?");
        String zona2= Input.lerStringZona();
-       model.diferençaHoras(zona,zona2);
+       long x=model.diferençaHoras(zona,zona2);
+       fromSecondsToHours(x,'a');
+   }
+     /**
+     * Esta função usa a função duracaoVoo() da classe Model para calcular que horas serão 
+     * quando aterrar 
+     * 
+     */
+    public void duracaoVoo(){
+       int year =0;
+       Month month = Month.JANUARY;
+       int day =0;
+       int year2 =0;
+       Month month2 = Month.JANUARY;
+       int day2 =0;
+        System.out.println("Insira a data de partida de acordo com a resolução escolhida no ficheiro de configuração :");
+        String data= Input.lerString();
+        String [] date=parseDate(data);
+        if(Configs.formatDate.equals("Common")){
+            day = Integer.parseInt(date[0]);
+            int auxMonth= Integer.parseInt(date[1]);
+            month = getMonth(auxMonth);
+            year = Integer.parseInt(date[2]);
+        }
+        else{
+            year = Integer.parseInt(date[0]);
+            int auxMonth= Integer.parseInt(date[1]);
+            month = getMonth(auxMonth);
+            day= Integer.parseInt(date[2]);
+        }
+        System.out.println("Insira hora de partida no formato HH:MM :");
+        String horaString= Input.lerString();
+        String [] horaStringRes= parseHours(horaString);
+        int hora= Integer.parseInt(horaStringRes[0]);
+        int minutos=Integer.parseInt(horaStringRes[1]);
+        System.out.println("Insira zona de partida :");
+        String zonaP= Input.lerStringZona();
+        System.out.println("Insira zona de chegada :");
+        String zonaC= Input.lerStringZona();
+        System.out.println("Insira a data de chegada acordo com a resolução escolhida no ficheiro de configuração :");
+        String data2= Input.lerString();
+        String [] date2=parseDate(data2);
+        if(Configs.formatDate.equals("Common")){
+            day2 = Integer.parseInt(date2[0]);
+            int auxMonth= Integer.parseInt(date2[1]);
+            month2 = getMonth(auxMonth);
+            year2 = Integer.parseInt(date2[2]);
+        }
+        else{
+            year2 = Integer.parseInt(date2[0]);
+            int auxMonth= Integer.parseInt(date2[1]);
+            month2 = getMonth(auxMonth);
+            day2= Integer.parseInt(date2[2]);
+        }
+        System.out.println("Insira a hora de chegada HH:MM :");
+        String horaVString= Input.lerString();
+        String [] horaVStringRes= parseHours(horaVString);
+        int horaV= Integer.parseInt(horaVStringRes[0]);
+        int minutosV= Integer.parseInt(horaVStringRes[1]);
+        
+        long x =model.duracaoVoo(year, month, day, hora, minutos, zonaP, zonaC, year2,month2,day2,horaV, minutosV);
+        fromSecondsToHours(x,'b');
    }
     /**
      * Esta função usa a função queHorasSerao() da classe Model para calcular que horas serão 
@@ -198,7 +264,8 @@ public class Controller {
         int horaV= Integer.parseInt(horaVStringRes[0]);
         int minutosV= Integer.parseInt(horaVStringRes[1]);
         
-        model.queHorasSerao(year, month, day, hora, minutos, zonaP, zonaC, horaV, minutosV);
+        ZonedDateTime x =model.queHorasSerao(year, month, day, hora, minutos, zonaP, zonaC, horaV, minutosV);
+        fashionPrint(x);
    }
     
     
@@ -333,6 +400,7 @@ public class Controller {
                 case "Z": horasPais();break;
                 case "D": diferençaHoras();break;
                 case "Q": queHorasSerao();break;
+                case "V": duracaoVoo();break;
                 case "S": break;
                 default: System.out.println("Opcão Inválida !"); break;
             }

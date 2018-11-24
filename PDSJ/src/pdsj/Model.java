@@ -87,18 +87,50 @@ public class Model {
      * @see  LocalDateTime#of(java.time.LocalDate, java.time.LocalTime) 
      * @see ZoneId#of(java.lang.String) 
      * @see ZonedDateTime#of(java.time.LocalDateTime, java.time.ZoneId) 
-     * @see OtherFunctions#fashionPrint(java.time.ZonedDateTime) 
      * 
      */
-    public void queHorasSerao(int year,Month month,int day,int hour,int minutes,String zonaPartida,String zonaChegada,int hoursFlight,int minutesFlight ){ 
+    public ZonedDateTime queHorasSerao(int year,Month month,int day,int hour,int minutes,String zonaPartida,String zonaChegada,int hoursFlight,int minutesFlight ){ 
         LocalDateTime dataDePartida= LocalDateTime.of(year,month,day,hour,minutes);
         ZoneId zonaDePartida = ZoneId.of(zonaPartida);
         ZonedDateTime partida = ZonedDateTime.of(dataDePartida,zonaDePartida);
         ZoneId zonaDeChegada = ZoneId.of(zonaChegada);
         ZonedDateTime chegada = partida.withZoneSameInstant(zonaDeChegada).plusHours(hoursFlight).plusMinutes(minutesFlight);
-        fashionPrint(chegada);
+        return chegada;
         
     }
+    /**
+     * Esta função calcula que horas serão quando o avião aterrar
+     * @param year ano da viagem de partida
+     * @param month mes da viagem de partida
+     * @param day dia da viagem de partida
+     * @param hour hora local de partida
+     * @param minutes minutes locais de partida
+     * @param zonaPartida zona local
+     * @param zonaChegada zona de Chegada
+     * @param year ano da viagem de chegada
+     * @param month mes da viagem de chegada
+     * @param day dia da viagem de chegada
+     * @param hour2 horas de chegada
+     * @param minutes2 minutos de chegada
+     * @see  LocalDateTime#of(java.time.LocalDate, java.time.LocalTime) 
+     * @see ZoneId#of(java.lang.String) 
+     * @see ZonedDateTime#of(java.time.LocalDateTime, java.time.ZoneId) 
+     * 
+     */
+    public long duracaoVoo(int year,Month month,int day,int hour,int minutes,String zonaPartida,String zonaChegada,int year2,Month month2,int day2,int hour2,int minutes2 ){ 
+        LocalDateTime partida = LocalDateTime.of(year, month, day, hour, minutes);   
+        LocalDateTime chegada =LocalDateTime.of(year2, month2, day2,hour2,minutes2);   
+	ZoneId fusoHorarioPartida = ZoneId.of(zonaPartida);
+	ZoneId fusoHorarioChegada = ZoneId.of(zonaChegada);
+        ZonedDateTime saidaComFusoHorario =ZonedDateTime.of(partida, fusoHorarioPartida);
+        ZonedDateTime chegadaComFusoHorario = 	ZonedDateTime.of(chegada, fusoHorarioChegada);
+        Duration duracaoDoVoo =  Duration.between(saidaComFusoHorario, chegadaComFusoHorario);
+        long a = duracaoDoVoo.getSeconds();
+        return a;
+        
+    }
+    
+    
     /**
      * Esta função calcula as horas num certo país
      * @param zoneId zona do país  
@@ -107,12 +139,12 @@ public class Model {
      * 
      * 
      */
-    public void horasPais(String zoneId){
+    public String horasPais(String zoneId){
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of(zoneId));
         LocalDate data = now.toLocalDate();
         LocalTime horas = now.toLocalTime();
         ZoneId id = now.getZone();
-        System.out.println("Sao "+horas+" em "+id+" na data "+data);
+        return "Sao "+horas+" em "+id+" na data "+data;
         
     }
     /**
@@ -123,7 +155,7 @@ public class Model {
      * @see ZonedDateTime#of(java.time.LocalDateTime, java.time.ZoneId) va.time.Duration)
      * 
      */
-    public void  diferençaHoras(String zoneId,String zoneId2){
+    public long diferençaHoras(String zoneId,String zoneId2){
         LocalDateTime now = LocalDateTime.now();
         ZoneId fusoN=ZoneId.of(zoneId);
         LocalDateTime now2 = LocalDateTime.now();
@@ -131,8 +163,8 @@ public class Model {
         ZonedDateTime nowz = ZonedDateTime.of(now,fusoN);
         ZonedDateTime nowz2 = ZonedDateTime.of(now2,fusoN2);
         Duration x = Duration.between(nowz,nowz2);
-          long a = x.getSeconds();
-        fromSecondsToHours(a);
+         long a = x.getSeconds();
+        return a;
     }
    
     
