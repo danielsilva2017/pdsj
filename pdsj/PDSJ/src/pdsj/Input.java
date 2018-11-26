@@ -147,14 +147,15 @@ public class Input {
      return s;
   }
   
-  public static String lerData(){
+  public static LocalDate lerData(){
       Scanner input = new Scanner(in);
       boolean ok = false;
       String s = "";
+      LocalDate data = LocalDate.MIN;
       while(!ok){
             try {
                 s = input.nextLine();
-                LocalDate.parse(s);
+                data = LocalDate.parse(s);
                 ok = true;
             } 
             catch(InputMismatchException | DateTimeParseException e){
@@ -162,35 +163,36 @@ public class Input {
                out.print("Novo valor: ");
             }
       }
-      return s;
+      return data;
   }
   
-  public static String lerHora(){
+  public static LocalTime lerHora(){
       Scanner input = new Scanner(in);
       boolean ok = false;
       String s = "";
+      LocalTime curr = LocalTime.MIDNIGHT;
       while(!ok){
             try {
                 s = input.nextLine();
-                LocalTime curr = LocalTime.parse(s);
+                curr = LocalTime.parse(s);
                 ok=true;
+                
             } 
             catch(InputMismatchException | DateTimeParseException e){
                out.println("Hora invalida"); 
                out.print("Novo valor: ");
             }
       }
-      return s;
+      return curr;
   }
   
   
   public static LocalTime lerHoraMarcacao(){
-      String hora = lerHora();
-      LocalTime curr = LocalTime.parse(hora);
+      LocalTime curr = lerHora();
       while (curr.isBefore(LocalTime.of(Configs.startingHour, 00)) || curr.isAfter(LocalTime.of(Configs.endHour, 00))){
           out.println("Hora inválida. Apenas entre as 10:00 e as 20:00");
           out.println("Novo valor: ");  
-          curr = LocalTime.parse(hora);
+          curr = lerHora();
       }
       return curr;
   }
