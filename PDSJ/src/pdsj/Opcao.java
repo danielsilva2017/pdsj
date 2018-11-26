@@ -55,7 +55,7 @@ public class Opcao {
     */
     @Override
     public String toString() {
-        return ""+  texto  +" "+ etiqueta + '}';
+        return ""+  texto  +" "+ etiqueta;
     }
     
 }

@@ -16,22 +16,41 @@ import java.time.ZonedDateTime;
  * @author silva
  */
 public class OtherFunctions {
+    /**
+     * Esta função imprime no ecra as horas, minutos e dias que chegará o avião
+     * @param arrive Zona do mundo
+     */
     public static void fashionPrint(ZonedDateTime arrive){
         LocalDate data = arrive.toLocalDate();
         LocalTime horas = arrive.toLocalTime();
         ZoneId id = arrive.getZone();
         System.out.println("Chegará a "+id+" por volta das "+horas+" locais, na data "+data);
     }
+      /**
+     * Esta função faz parsing da data
+     * @param str data em formato String
+     * @return do array com cada parte da data ( dia,mês e ano)
+     */
     public static String [] parseDate(String str ){
         
         String [] res =str.split("-");
         return res;
     }
+     /**
+     * Esta função faz parsing da data
+     * @param str hora em formato String
+     * @return do array com cada parte da hora(horas e minutos)
+     */
      public static String [] parseHours(String str ){
         
         String [] res =str.split(":");
         return res;
     }
+     /**
+     * Esta função transforma o mês inserido em forma numérica em formato java.time.Month
+     * @param i numero do mês
+     * @return do mês
+     */
     public static Month getMonth(int i){
         Month x = Month.JANUARY;
         switch(i) {
@@ -52,13 +71,25 @@ public class OtherFunctions {
         }
         return x;
     }
-    public static void fromSecondsToHours(long i){
+     /**
+     * Esta função imprime a transformação de um dado número de segundos em horas e minutos
+     * @param i número de segundos
+     * 
+     */
+    public static void fromSecondsToHours(long i,char v){
+        String a = "mais";
         if(i<0){
             i=i*-1;
+            a="menos";
         }
         long hours = i/3600;
         long rest = i-(hours*3600);
         long minutes=rest/60;
-        System.out.println("Horas "+hours +" e minutos "+minutes);
+         switch(v) {
+                case 'a':System.out.println("A diferença horária é de "+a+" "+hours +" horas e "+minutes+" minutos"); break;
+                case 'b':System.out.println("A duração do voo é de "+hours+" horas e "+minutes+" minutos."); break;
+                default: break;
+            }
+        
     }
 }
