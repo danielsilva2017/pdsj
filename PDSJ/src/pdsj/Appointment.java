@@ -93,9 +93,9 @@ public class Appointment implements Comparable<Appointment>{
     @Override
     public String toString() {
         if (Configs.formatDate.equals("common")){
-            return "Appointment: " + description + ". " + day.getDayOfWeek() + ", " + day.format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) + ", from " + start + " to " + end + ".";
+            return "Marcação: " + description + ". " + day.getDayOfWeek() + ", " + day.format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) + ", desde as " + start + " até às " + end + ".";
         } else {
-            return "Appointment: " + description + ". " + day.getDayOfWeek() + ", " + day.format(DateTimeFormatter.ofPattern("yyyy MMMM dd")) + ", from " + start + " to " + end + ".";
+            return "Marcação: " + description + ". " + day.getDayOfWeek() + ", " + day.format(DateTimeFormatter.ofPattern("yyyy MMMM dd")) + ", desde as " + start + " até às " + end + ".";
         }
     }
 

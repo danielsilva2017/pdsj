@@ -7,15 +7,17 @@ package pdsj;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
+import java.time.Period;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import static pdsj.OtherFunctions.fashionPrint;
-import static pdsj.OtherFunctions.fromSecondsToHours;
 import static pdsj.OtherFunctions.parseDate;
 import static pdsj.OtherFunctions.getMonth;
 import static pdsj.OtherFunctions.parseHours;
+import static pdsj.OtherFunctions.segundosParaHoras;
 
 /**
  * Classe que contém as funções do controller , seguindo o modelo MVC
@@ -54,10 +56,12 @@ public class Controller {
             System.out.println("Formato data: yyyy-mm-dd");
         }   
         System.out.println("Insira a data inicial: ");
-        LocalDate data1 = LocalDate.parse(Input.lerData());
+        LocalDate data1 = Input.lerData();
         System.out.println("Insira a data final: ");
-        LocalDate data2 = LocalDate.parse(Input.lerData());
-        model.contasDatas(data1,data2);
+        LocalDate data2 = Input.lerData();
+        Period p1 = model.contasDatas(data1,data2);
+        System.out.println("Diferença de datas -> Anos " + p1.getYears()+ 
+                            "; Meses " + p1.getMonths() + "; Dias " + p1.getDays());
     }
     /*
     * Esta função usa contasHoras da classe Model para calcular a diferença 
@@ -65,10 +69,12 @@ public class Controller {
     */
     public void horas(){
         System.out.println("Insira a hora inicial: ");
-        LocalTime hora1 = LocalTime.parse(Input.lerHora());
+        LocalTime hora1 = Input.lerHora();
         System.out.println("Insira a hora final: ");
-        LocalTime hora2 = LocalTime.parse(Input.lerHora());
-        model.contasHoras(hora1,hora2);
+        LocalTime hora2 = Input.lerHora();
+        LocalTime ht = model.contasHoras(hora1,hora2);
+        System.out.println("Diferença de datas -> Horas " + ht.getHour() + 
+                            "; Minutos " + ht.getMinute() + "; Segundos " + ht.getSecond());
     }
     /*
     * Esta função usa contasDatasHoras da classe Model para calcular a diferença 
@@ -76,21 +82,21 @@ public class Controller {
     */
     public void datasHoras(){
         if(Configs.formatDate.equals("Common")){
-            System.out.println("Formato data: dd-mm-yyyy");
+            System.out.println("ormato data: dd-mm-yyyy");
         }
         else{
             System.out.println("Formato data: yyyy-mm-dd");
         }
         System.out.println("Insira a data inicial: ");
-        LocalDate data1 = LocalDate.parse(Input.lerData());
+        LocalDate data1 = Input.lerData();
         System.out.println("Insira a hora inicial: ");
-        LocalTime hora1 = LocalTime.parse(Input.lerHora());
+        LocalTime hora1 = Input.lerHora();
         
         System.out.println("Insira a data final: ");
-        LocalDate data2 = LocalDate.parse(Input.lerData());
+        LocalDate data2 = Input.lerData();
         System.out.println("Insira a hora final: ");
-        LocalTime hora2 = LocalTime.parse(Input.lerHora());
-        model.contasDatasHoras(data1, data2, hora1, hora2);
+        LocalTime hora2 = Input.lerHora();
+        System.out.println(model.contasDatasHoras(data1, data2, hora1, hora2));
     }
     /*
     * Esta função usa addDatas da classe Model para adicionar anos, meses e/ou dias 
@@ -104,7 +110,7 @@ public class Controller {
             System.out.println("Formato data: yyyy-mm-dd");
         }
         System.out.println("Insira a data inicial: ");
-        LocalDate data = LocalDate.parse(Input.lerData());
+        LocalDate data = Input.lerData();
         System.out.println("Insira valores a adicionar: ");
         System.out.println("  Anos: ");
         int ano = Input.lerInt();
@@ -114,7 +120,9 @@ public class Controller {
         int semana = Input.lerInt();
         System.out.println("  Dias: ");
         int dias = Input.lerInt();
-        model.addDatas(data, ano, mes, semana, dias);
+        LocalDate data2 = model.addDatas(data, ano, mes, semana, dias);
+        System.out.println("Nova data -> Ano " + data2.getYear() + 
+                            "; Mês " + data2.getMonth() + "; Dia " + data2.getDayOfMonth());
     }
     /*
     * Esta função usa subDatas da classe Model para subtrair anos, meses, semanas e/ou dias 
@@ -128,7 +136,7 @@ public class Controller {
             System.out.println("Formato data: yyyy-mm-dd");
         }
         System.out.println("Insira a data inicial: ");
-        LocalDate data = LocalDate.parse(Input.lerData());
+        LocalDate data = Input.lerData();
         System.out.println("Insira valores a adicionar: ");
         System.out.println("  Anos: ");
         int ano = Input.lerInt();
@@ -138,7 +146,9 @@ public class Controller {
         int semana = Input.lerInt();
         System.out.println("  Dias: ");
         int dias = Input.lerInt();
-        model.subDatas(data, ano, mes, semana, dias);
+        LocalDate data2 = model.subDatas(data, ano, mes, semana, dias);
+        System.out.println("Nova data -> Ano " + data2.getYear() + 
+                            "; Mês " + data2.getMonth() + "; Dia " + data2.getDayOfMonth());
     }
     
     
@@ -163,7 +173,7 @@ public class Controller {
        System.out.println("Qual é o id do Pais 2?");
        String zona2= Input.lerStringZona();
        long x=model.diferençaHoras(zona,zona2);
-       fromSecondsToHours(x,'a');
+       segundosParaHoras(x,'a');
    }
      /**
      * Esta função usa a função duracaoVoo() da classe Model para calcular que horas serão 
@@ -171,59 +181,32 @@ public class Controller {
      * 
      */
     public void duracaoVoo(){
-       int year =0;
-       Month month = Month.JANUARY;
-       int day =0;
-       int year2 =0;
-       Month month2 = Month.JANUARY;
-       int day2 =0;
-        System.out.println("Insira a data de partida de acordo com a resolução escolhida no ficheiro de configuração :");
-        String data= Input.lerString();
-        String [] date=parseDate(data);
         if(Configs.formatDate.equals("Common")){
-            day = Integer.parseInt(date[0]);
-            int auxMonth= Integer.parseInt(date[1]);
-            month = getMonth(auxMonth);
-            year = Integer.parseInt(date[2]);
+            System.out.println("Insira a data de partida de acordo com a resolução escolhida no ficheiro de configuração (dd-mm-yyyy) :");
         }
         else{
-            year = Integer.parseInt(date[0]);
-            int auxMonth= Integer.parseInt(date[1]);
-            month = getMonth(auxMonth);
-            day= Integer.parseInt(date[2]);
+            System.out.println("Insira a data de partida de acordo com a resolução escolhida no ficheiro de configuração (yyyy-mm-dd) :");
         }
+        
+        LocalDate data = Input.lerData();
         System.out.println("Insira hora de partida no formato HH:MM :");
-        String horaString= Input.lerString();
-        String [] horaStringRes= parseHours(horaString);
-        int hora= Integer.parseInt(horaStringRes[0]);
-        int minutos=Integer.parseInt(horaStringRes[1]);
+        LocalTime hora = Input.lerHora();
         System.out.println("Insira zona de partida :");
         String zonaP= Input.lerStringZona();
         System.out.println("Insira zona de chegada :");
         String zonaC= Input.lerStringZona();
-        System.out.println("Insira a data de chegada acordo com a resolução escolhida no ficheiro de configuração :");
-        String data2= Input.lerString();
-        String [] date2=parseDate(data2);
         if(Configs.formatDate.equals("Common")){
-            day2 = Integer.parseInt(date2[0]);
-            int auxMonth= Integer.parseInt(date2[1]);
-            month2 = getMonth(auxMonth);
-            year2 = Integer.parseInt(date2[2]);
+            System.out.println("Insira a data de chegada de acordo com a resolução escolhida no ficheiro de configuração (dd-mm-yyyy) :");
         }
         else{
-            year2 = Integer.parseInt(date2[0]);
-            int auxMonth= Integer.parseInt(date2[1]);
-            month2 = getMonth(auxMonth);
-            day2= Integer.parseInt(date2[2]);
+            System.out.println("Insira a data de chegada de acordo com a resolução escolhida no ficheiro de configuração (yyyy-mm-dd) :");
         }
+        LocalDate dataChegada = Input.lerData();
         System.out.println("Insira a hora de chegada HH:MM :");
-        String horaVString= Input.lerString();
-        String [] horaVStringRes= parseHours(horaVString);
-        int horaV= Integer.parseInt(horaVStringRes[0]);
-        int minutosV= Integer.parseInt(horaVStringRes[1]);
+        LocalTime horaChegada= Input.lerHora();
         
-        long x =model.duracaoVoo(year, month, day, hora, minutos, zonaP, zonaC, year2,month2,day2,horaV, minutosV);
-        fromSecondsToHours(x,'b');
+        long x =model.duracaoVoo(LocalDateTime.of(data, hora), zonaP, zonaC, LocalDateTime.of(dataChegada, horaChegada));
+        segundosParaHoras(x,'b');
    }
     /**
      * Esta função usa a função queHorasSerao() da classe Model para calcular que horas serão 
@@ -231,40 +214,22 @@ public class Controller {
      * 
      */
    public void queHorasSerao(){
-       int year =0;
-       Month month = Month.JANUARY;
-       int day =0;
-        System.out.println("Insira a data de acordo com a resolução escolhida no ficheiro de configuração :");
-        String data= Input.lerString();
-        String [] date=parseDate(data);
         if(Configs.formatDate.equals("Common")){
-            day = Integer.parseInt(date[0]);
-            int auxMonth= Integer.parseInt(date[1]);
-            month = getMonth(auxMonth);
-            year = Integer.parseInt(date[2]);
+            System.out.println("Insira a data de partida de acordo com a resolução escolhida no ficheiro de configuração (dd-mm-yyyy) :");
         }
         else{
-            year = Integer.parseInt(date[0]);
-            int auxMonth= Integer.parseInt(date[1]);
-            month = getMonth(auxMonth);
-            day= Integer.parseInt(date[2]);
+            System.out.println("Insira a data de partida de acordo com a resolução escolhida no ficheiro de configuração (yyyy-mm-dd) :");
         }
+        LocalDate data = Input.lerData();
         System.out.println("Insira hora de partida no formato HH:MM :");
-        String horaString= Input.lerString();
-        String [] horaStringRes= parseHours(horaString);
-        int hora= Integer.parseInt(horaStringRes[0]);
-        int minutos=Integer.parseInt(horaStringRes[1]);
+        LocalTime hora = Input.lerHora();
         System.out.println("Insira zona de partida :");
         String zonaP= Input.lerStringZona();
         System.out.println("Insira zona de chegada :");
         String zonaC= Input.lerStringZona();
         System.out.println("Insira a duração da viagem  no formato HH:MM :");
-        String horaVString= Input.lerString();
-        String [] horaVStringRes= parseHours(horaVString);
-        int horaV= Integer.parseInt(horaVStringRes[0]);
-        int minutosV= Integer.parseInt(horaVStringRes[1]);
-        
-        ZonedDateTime x =model.queHorasSerao(year, month, day, hora, minutos, zonaP, zonaC, horaV, minutosV);
+        LocalTime horaV = Input.lerHora();
+        ZonedDateTime x =model.queHorasSerao(LocalDateTime.of(data, hora), zonaP, zonaC, horaV);
         fashionPrint(x);
    }
     
@@ -273,7 +238,7 @@ public class Controller {
     //Metodos Agenda
     public void adicionarMarcacao(){
         System.out.println("Insira a data de acordo com o formato escolhido");
-        LocalDate diaMarcacao = LocalDate.parse(Input.lerData());
+        LocalDate diaMarcacao = Input.lerData();
         System.out.println("Marcações do dia escolhido");
         ArrayList<Appointment> appointments=(ArrayList<Appointment>) model.seeAppointments(diaMarcacao).values();
         for (Appointment a: appointments){
@@ -306,7 +271,7 @@ public class Controller {
     
     public void eliminarMarcacao(){
         System.out.println("Insira a data de acordo com o formato escolhido");
-        LocalDate diaMarcacao = LocalDate.parse(Input.lerData());
+        LocalDate diaMarcacao = Input.lerData();
         System.out.println("Marcações do dia escolhido");
         ArrayList<Appointment> appointments=(ArrayList<Appointment>) model.seeAppointments(diaMarcacao).values();
         for (Appointment a: appointments){
@@ -324,7 +289,7 @@ public class Controller {
     
     public void verMarcacoes(){
         System.out.println("Insira a data de acordo com o formato escolhido");
-        LocalDate diaMarcacao = LocalDate.parse(Input.lerData());
+        LocalDate diaMarcacao = Input.lerData();
         System.out.println("Marcações do dia escolhido");
         ArrayList<Appointment> appointments=(ArrayList<Appointment>) model.seeAppointments(diaMarcacao).values();
         for (Appointment a: appointments){

@@ -76,7 +76,7 @@ public class OtherFunctions {
      * @param i número de segundos
      * 
      */
-    public static void fromSecondsToHours(long i,char v){
+    public static void segundosParaHoras(long i,char v){
         String a = "mais";
         if(i<0){
             i=i*-1;

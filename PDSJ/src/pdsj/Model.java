@@ -13,10 +13,7 @@ import java.time.Month;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.TreeMap;
-import static pdsj.OtherFunctions.fashionPrint;
-import static pdsj.OtherFunctions.fromSecondsToHours;
 
 public class Model {
     
@@ -75,51 +72,36 @@ public class Model {
     
     /**
      * Esta função calcula que horas serão quando o avião aterrar
-     * @param year ano da viagem de partida
-     * @param month mes da viagem de partida
-     * @param day dia da viagem de partida
-     * @param hour hora local de partida
-     * @param minutes minutes locais de partida
+     * @param dataDePartida data e hora da partida do vôo
      * @param zonaPartida zona local
      * @param zonaChegada zona de Chegada
      * @param hoursFlight horas de duração da viagem
-     * @param minutesFlight minutos de duração de viagem
+     * @return ZonedDateTime
      * @see  LocalDateTime#of(java.time.LocalDate, java.time.LocalTime) 
      * @see ZoneId#of(java.lang.String) 
      * @see ZonedDateTime#of(java.time.LocalDateTime, java.time.ZoneId) 
      * 
      */
-    public ZonedDateTime queHorasSerao(int year,Month month,int day,int hour,int minutes,String zonaPartida,String zonaChegada,int hoursFlight,int minutesFlight ){ 
-        LocalDateTime dataDePartida= LocalDateTime.of(year,month,day,hour,minutes);
+    public ZonedDateTime queHorasSerao(LocalDateTime dataDePartida,String zonaPartida,String zonaChegada,LocalTime hoursFlight ){ 
         ZoneId zonaDePartida = ZoneId.of(zonaPartida);
         ZonedDateTime partida = ZonedDateTime.of(dataDePartida,zonaDePartida);
         ZoneId zonaDeChegada = ZoneId.of(zonaChegada);
-        ZonedDateTime chegada = partida.withZoneSameInstant(zonaDeChegada).plusHours(hoursFlight).plusMinutes(minutesFlight);
+        ZonedDateTime chegada = partida.withZoneSameInstant(zonaDeChegada).plusHours(hoursFlight.getHour()).plusMinutes(hoursFlight.getMinute());
         return chegada;
         
     }
     /**
      * Esta função calcula que horas serão quando o avião aterrar
-     * @param year ano da viagem de partida
-     * @param month mes da viagem de partida
-     * @param day dia da viagem de partida
-     * @param hour hora local de partida
-     * @param minutes minutes locais de partida
+     * @param partida hora e data de partida
      * @param zonaPartida zona local
      * @param zonaChegada zona de Chegada
-     * @param year ano da viagem de chegada
-     * @param month mes da viagem de chegada
-     * @param day dia da viagem de chegada
-     * @param hour2 horas de chegada
-     * @param minutes2 minutos de chegada
+     * @param chegada hora e data de chegada
      * @see  LocalDateTime#of(java.time.LocalDate, java.time.LocalTime) 
      * @see ZoneId#of(java.lang.String) 
      * @see ZonedDateTime#of(java.time.LocalDateTime, java.time.ZoneId) 
-     * 
+     * @return 
      */
-    public long duracaoVoo(int year,Month month,int day,int hour,int minutes,String zonaPartida,String zonaChegada,int year2,Month month2,int day2,int hour2,int minutes2 ){ 
-        LocalDateTime partida = LocalDateTime.of(year, month, day, hour, minutes);   
-        LocalDateTime chegada =LocalDateTime.of(year2, month2, day2,hour2,minutes2);   
+    public long duracaoVoo(LocalDateTime partida,String zonaPartida,String zonaChegada, LocalDateTime chegada ){ 
 	ZoneId fusoHorarioPartida = ZoneId.of(zonaPartida);
 	ZoneId fusoHorarioChegada = ZoneId.of(zonaChegada);
         ZonedDateTime saidaComFusoHorario =ZonedDateTime.of(partida, fusoHorarioPartida);
@@ -174,19 +156,20 @@ public class Model {
      * Esta função calcula quantos anos, meses e dias existem de diferença entre duas datas.
      * @param data1 data inicial
      * @param data2 data final
+     * @return Periodo
      */
-    public void contasDatas(LocalDate data1, LocalDate data2){
+    public Period contasDatas(LocalDate data1, LocalDate data2){
         Period p = Period.between(data1, data2);
         Period p1 = p.normalized();
-        System.out.println("Diferença de datas -> Anos " + p1.getYears()+ 
-                            "; Meses " + p1.getMonths() + "; Dias " + p1.getDays());
+        return p1;
     }
     /**
      * Esta função calcula quantas horas, minutos e seguntos existem de diferença entre duas horas.
      * @param hora1 hora inicial
      * @param hora2 hora final
+     * @return LocalTime
      */
-    public void contasHoras(LocalTime hora1, LocalTime hora2){
+    public LocalTime contasHoras(LocalTime hora1, LocalTime hora2){
         int h = 0;
         int m = 0;
         int s = 0;
@@ -210,8 +193,7 @@ public class Model {
         
         
         LocalTime ht = LocalTime.of(h, m, s);
-        System.out.println("Diferença de datas -> Horas " + ht.getHour() + 
-                            "; Minutos " + ht.getMinute() + "; Segundos " + ht.getSecond());
+        return ht;
     }
     /**
      * Esta função calcula quantos anos, meses, dias, horas, minutos e seguntos existem 
@@ -220,8 +202,9 @@ public class Model {
      * @param data2 data final
      * @param hora1 hora inicial
      * @param hora2 hora final
+     * @return String
      */
-    public void contasDatasHoras(LocalDate data1, LocalDate data2, LocalTime hora1, LocalTime hora2){
+    public String contasDatasHoras(LocalDate data1, LocalDate data2, LocalTime hora1, LocalTime hora2){
         Period p = Period.between(data1, data2);
         Period p1 = p.normalized();
         
@@ -246,10 +229,10 @@ public class Model {
         
         
         LocalTime ht = LocalTime.of(h, m, s);
-        System.out.println("Diferença de datas -> Anos " + p1.getYears()+ 
-                            "; Meses " + p1.getMonths() + "; Dias " + p1.getDays() + ";\n "
-                         + "                     Horas " + ht.getHour() + 
-                            "; Minutos " + ht.getMinute() + "; Segundos " + ht.getSecond());
+        return "Diferença de datas -> Anos " + p1.getYears()+ 
+                "; Meses " + p1.getMonths() + "; Dias " + p1.getDays() + ";\n "
+                + "                     Horas " + ht.getHour() +
+                "; Minutos " + ht.getMinute() + "; Segundos " + ht.getSecond();
     }
     /**
      * Esta função adiciona valores a uma data.
@@ -258,11 +241,11 @@ public class Model {
      * @param mes quantidade de meses a adicionar à data
      * @param dias quantidade de dias a adicionar à data
      * @param semana quantidade de semanas a adicionar à data
+     * @return LocalDate
      */
-    public void addDatas(LocalDate data, int ano, int mes, int semana, int dias){
+    public LocalDate addDatas(LocalDate data, int ano, int mes, int semana, int dias){
         LocalDate data2 = data.plusYears(ano).plusMonths(mes).plusWeeks(semana).plusDays(dias);
-        System.out.println("Nova data -> Ano " + data2.getYear() + 
-                            "; Mês " + data2.getMonth() + "; Dia " + data2.getDayOfMonth());
+        return data2;
     }
     /**
     * Esta função subtraí valores a uma data.
@@ -271,10 +254,10 @@ public class Model {
     * @param mes quantidade de meses a subtrair à data
     * @param dias quantidade de dias a subtrair à data
     * @param semana quantidade de semanas a adicionar à data
+    * @return LocalDate
     */
-    public void subDatas(LocalDate data, int ano, int mes, int semana, int dias){
+    public LocalDate subDatas(LocalDate data, int ano, int mes, int semana, int dias){
         LocalDate data2 = data.minusYears(ano).minusMonths(mes).minusWeeks(semana).minusDays(dias);
-        System.out.println("Nova data -> Ano " + data2.getYear() + 
-                            "; Mês " + data2.getMonth() + "; Dia " + data2.getDayOfMonth());
+        return data2;
     }
 }

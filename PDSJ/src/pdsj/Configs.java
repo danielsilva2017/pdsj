@@ -10,15 +10,15 @@ public class Configs {
     public static int startingHour = 10; //hora a que podem começar os appointments
     public static int endHour = 20; //hora a que podem terminar os appointments
     
-    public void changeDateFormat(String newFormat){
+    public void mudarFormatoData(String newFormat){
         formatDate=newFormat;
     }
     
-    public void changeAppointmentsStartingHour(int newHour){
+    public void mudarHoraComecoMarcacao(int newHour){
         startingHour=newHour;
     }
     
-    public void changeAppointmentsEndHour(int newHour){
+    public void mudarHoraFimMarcacao(int newHour){
         endHour=newHour;
     }
     
