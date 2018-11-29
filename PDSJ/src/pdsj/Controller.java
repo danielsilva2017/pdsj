@@ -390,7 +390,9 @@ public class Controller {
             opcao = Input.lerString(); 
             opcao = opcao.toUpperCase();
             switch(opcao) {
-                case "F": break;
+                case "F": adicionarMarcacao(); break;
+                case "V": verMarcacoes();break;
+                case "E": eliminarMarcacao();break;
                 case "S": break;
                 default: System.out.println("Opcão Inválida !"); break;
             }
