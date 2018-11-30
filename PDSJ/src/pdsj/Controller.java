@@ -13,6 +13,8 @@ import java.time.Month;
 import java.time.Period;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.TreeSet;
+
 import static pdsj.OtherFunctions.fashionPrint;
 import static pdsj.OtherFunctions.parseDate;
 import static pdsj.OtherFunctions.getMonth;
@@ -167,12 +169,12 @@ public class Controller {
      * Esta função usa a função diferençaHoras() da classe Model para calcular a diferença de horas 
      * entre determinado dois determinados países
      */
-   public void diferençaHoras(){
+   public void diferencaHoras(){
       System.out.println("Qual é o id do Pais 1? ");
        String zona= Input.lerStringZona();
        System.out.println("Qual é o id do Pais 2?");
        String zona2= Input.lerStringZona();
-       long x=model.diferençaHoras(zona,zona2);
+       long x=model.diferencaHoras(zona,zona2);
        segundosParaHoras(x,'a');
    }
      /**
@@ -237,13 +239,20 @@ public class Controller {
     
     //Metodos Agenda
     public void adicionarMarcacao(){
-        System.out.println("Insira a data de acordo com o formato escolhido");
-        LocalDate diaMarcacao = Input.lerData();
-        System.out.println("Marcações do dia escolhido");
-        ArrayList<Appointment> appointments=(ArrayList<Appointment>) model.seeAppointments(diaMarcacao).values();
-        for (Appointment a: appointments){
-            System.out.println(a);
+    	if(Configs.formatDate.equals("Common")){
+            System.out.println("Insira a data de acordo com a resolução escolhida no ficheiro de configuração (dd-mm-yyyy) :");
         }
+        else{
+            System.out.println("Insira a data de acordo com a resolução escolhida no ficheiro de configuração (yyyy-mm-dd) :");
+        }
+        LocalDate diaMarcacao = Input.lerData();
+        ArrayList<Appointment> appointments= new ArrayList<>(model.seeAppointments(diaMarcacao).values());
+	    if (appointments.size()!=0){
+        	System.out.println("Marcações do dia escolhido");
+	        for (Appointment a: appointments){
+	            System.out.println(a);
+	        }
+	    }
         System.out.println("Insira a hora a que começa a marcação pretendida (apenas entre as 10:00 e as 20:00, a cada :00 ou :30)");
         LocalTime horaInicio = Input.lerHoraMarcacao();
         System.out.println("Insira a hora a que termina a marcação pretendida (apenas entre as 10:00 e as 20:00, a cada :00 ou :30)");
@@ -270,13 +279,20 @@ public class Controller {
     }
     
     public void eliminarMarcacao(){
-        System.out.println("Insira a data de acordo com o formato escolhido");
-        LocalDate diaMarcacao = Input.lerData();
-        System.out.println("Marcações do dia escolhido");
-        ArrayList<Appointment> appointments=(ArrayList<Appointment>) model.seeAppointments(diaMarcacao).values();
-        for (Appointment a: appointments){
-            System.out.println(a);
+    	if(Configs.formatDate.equals("Common")){
+            System.out.println("Insira a data de acordo com a resolução escolhida no ficheiro de configuração (dd-mm-yyyy) :");
         }
+        else{
+            System.out.println("Insira a data de acordo com a resolução escolhida no ficheiro de configuração (yyyy-mm-dd) :");
+        }
+        LocalDate diaMarcacao = Input.lerData();
+        ArrayList<Appointment> appointments= new ArrayList<>(model.seeAppointments(diaMarcacao).values());
+	    if (appointments.size()!=0){
+        	System.out.println("Marcações do dia escolhido");
+	        for (Appointment a: appointments){
+	            System.out.println(a);
+	        }
+	    }
         System.out.println("Insira a hora a que começa a marcação pretendida (apenas entre as 10:00 e as 20:00, a cada :00 ou :30)");
         LocalTime horaInicio = Input.lerHoraMarcacao();
         if (horaInicio.getMinute()>30){
@@ -288,13 +304,22 @@ public class Controller {
     }
     
     public void verMarcacoes(){
-        System.out.println("Insira a data de acordo com o formato escolhido");
-        LocalDate diaMarcacao = Input.lerData();
-        System.out.println("Marcações do dia escolhido");
-        ArrayList<Appointment> appointments=(ArrayList<Appointment>) model.seeAppointments(diaMarcacao).values();
-        for (Appointment a: appointments){
-            System.out.println(a);
+    	if(Configs.formatDate.equals("Common")){
+            System.out.println("Insira a data de acordo com a resolução escolhida no ficheiro de configuração (dd-mm-yyyy) :");
         }
+        else{
+            System.out.println("Insira a data de acordo com a resolução escolhida no ficheiro de configuração (yyyy-mm-dd) :");
+        }
+        LocalDate diaMarcacao = Input.lerData();
+        ArrayList<Appointment> appointments= new ArrayList<>(model.seeAppointments(diaMarcacao).values());
+	    if (appointments.size()!=0){
+        	System.out.println("Marcações do dia escolhido");
+	        for (Appointment a: appointments){
+	            System.out.println(a);
+	        }
+	    } else {
+	    	System.out.println("Não tem marcações neste dia.");
+	    }
     }
     
     //-----------------------------Flows-----------------------------------------------------
@@ -363,7 +388,7 @@ public class Controller {
             opcao = opcao.toUpperCase();
             switch(opcao) {
                 case "Z": horasPais();break;
-                case "D": diferençaHoras();break;
+                case "D": diferencaHoras();break;
                 case "Q": queHorasSerao();break;
                 case "V": duracaoVoo();break;
                 case "S": break;

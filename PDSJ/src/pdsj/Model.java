@@ -17,7 +17,7 @@ import java.util.TreeMap;
 
 public class Model {
     
-    private TreeMap<LocalDate, TreeMap<LocalTime, Appointment>> marcacoes;
+    private TreeMap<LocalDate, TreeMap<LocalTime, Appointment>> marcacoes = new TreeMap<>();
     
     //Funçoes controller1
     
@@ -40,7 +40,11 @@ public class Model {
      * @return mapa das marcações do dia
      */
     public TreeMap<LocalTime, Appointment> seeAppointments(LocalDate dia){
-        return marcacoes.get(dia);
+        if (marcacoes.get(dia)==null) {
+        	return new TreeMap<LocalTime, Appointment>();
+        } else {
+        	return marcacoes.get(dia);
+        }
     }
     /**
      * Esta função elimina uma marcação
@@ -61,6 +65,9 @@ public class Model {
      */
     public boolean verificarDisponibilidadeMarcacao(LocalDate dia, LocalTime horaInicio, LocalTime horaFim){
        TreeMap<LocalTime, Appointment> values = marcacoes.get(dia);
+       if (values==null) {
+    	   values = new TreeMap<>();
+       }
        while (horaInicio != horaFim){
            LocalTime newStartTime = horaFim.minusMinutes(30);
            if (values.containsKey(newStartTime)) return false;
@@ -137,7 +144,7 @@ public class Model {
      * @see ZonedDateTime#of(java.time.LocalDateTime, java.time.ZoneId) va.time.Duration)
      * 
      */
-    public long diferençaHoras(String zoneId,String zoneId2){
+    public long diferencaHoras(String zoneId,String zoneId2){
         LocalDateTime now = LocalDateTime.now();
         ZoneId fusoN=ZoneId.of(zoneId);
         LocalDateTime now2 = LocalDateTime.now();
