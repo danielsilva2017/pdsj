@@ -40,11 +40,7 @@ public class Model {
      * @return mapa das marcações do dia
      */
     public TreeMap<LocalTime, Appointment> seeAppointments(LocalDate dia){
-        if (marcacoes.get(dia)==null) {
-        	return new TreeMap<LocalTime, Appointment>();
-        } else {
-        	return marcacoes.get(dia);
-        }
+        return marcacoes.get(dia);
     }
     /**
      * Esta função elimina uma marcação
@@ -53,6 +49,9 @@ public class Model {
      */
     public void deleteApppointment(LocalDate dia, LocalTime horaInicio){
         TreeMap<LocalTime, Appointment> valores = marcacoes.get(dia);
+        if (valores==null) {
+        	return;
+        }
         valores.remove(horaInicio);
         marcacoes.put(dia, valores);
     }
@@ -66,7 +65,7 @@ public class Model {
     public boolean verificarDisponibilidadeMarcacao(LocalDate dia, LocalTime horaInicio, LocalTime horaFim){
        TreeMap<LocalTime, Appointment> values = marcacoes.get(dia);
        if (values==null) {
-    	   values = new TreeMap<>();
+    	   return true;
        }
        while (horaInicio != horaFim){
            LocalTime newStartTime = horaFim.minusMinutes(30);

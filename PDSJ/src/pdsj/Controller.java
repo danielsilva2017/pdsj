@@ -13,6 +13,7 @@ import java.time.Month;
 import java.time.Period;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import static pdsj.OtherFunctions.fashionPrint;
@@ -246,26 +247,37 @@ public class Controller {
             System.out.println("Insira a data de acordo com a resolução escolhida no ficheiro de configuração (yyyy-mm-dd) :");
         }
         LocalDate diaMarcacao = Input.lerData();
-        ArrayList<Appointment> appointments= new ArrayList<>(model.seeAppointments(diaMarcacao).values());
-	    if (appointments.size()!=0){
-        	System.out.println("Marcações do dia escolhido");
-	        for (Appointment a: appointments){
-	            System.out.println(a);
-	        }
-	    }
+        while(diaMarcacao.isBefore(LocalDate.now())) {
+        	System.out.println("Data inv⭩da!");
+        	diaMarcacao=Input.lerData();
+        }
+        TreeMap<LocalTime, Appointment> t = model.seeAppointments(diaMarcacao);
+        if (t!=null) {
+	        ArrayList<Appointment> appointments= new ArrayList<>(t.values());
+		    if (appointments.size()!=0){
+	        	System.out.println("Marcações do dia escolhido");
+		        for (Appointment a: appointments){
+		            System.out.println(a);
+		        }
+		    }
+        }
         System.out.println("Insira a hora a que começa a marcação pretendida (apenas entre as 10:00 e as 20:00, a cada :00 ou :30)");
         LocalTime horaInicio = Input.lerHoraMarcacao();
         System.out.println("Insira a hora a que termina a marcação pretendida (apenas entre as 10:00 e as 20:00, a cada :00 ou :30)");
         LocalTime horaFim = Input.lerHoraMarcacao();
+        while(horaFim.isBefore(horaInicio)||(horaFim.isBefore(LocalTime.now())&&diaMarcacao.isEqual(LocalDate.now()))) {
+        	System.out.println("Hora inv⭩da!");
+        	horaFim = Input.lerHoraMarcacao();
+        }
         System.out.println("Insira a descrição da marcação");
         String description = Input.lerString();
         if (horaInicio.getMinute()>30){
-            horaInicio = LocalTime.of(horaInicio.getHour(), 30);
+            horaInicio = LocalTime.of(horaInicio.getHour()+1, 0);
         } else if (horaInicio.getMinute() < 30) {
             horaInicio = LocalTime.of(horaInicio.getHour(), 0);
         }
         if (horaFim.getMinute()>30){
-            horaFim = LocalTime.of(horaFim.getHour(), 30);
+            horaFim = LocalTime.of(horaFim.getHour()+1, 0);
         } else if (horaFim.getMinute() < 30) {
             horaFim = LocalTime.of(horaFim.getHour(), 0);
         }
@@ -275,6 +287,8 @@ public class Controller {
                 model.makeAppointment(diaMarcacao, newHoraInicio, description);
                 horaFim = newHoraInicio;
             }
+        } else {
+        	System.out.println("Já xiste uma marcação no intervalo de tempo escolhido.");
         }
     }
     
@@ -286,13 +300,16 @@ public class Controller {
             System.out.println("Insira a data de acordo com a resolução escolhida no ficheiro de configuração (yyyy-mm-dd) :");
         }
         LocalDate diaMarcacao = Input.lerData();
-        ArrayList<Appointment> appointments= new ArrayList<>(model.seeAppointments(diaMarcacao).values());
-	    if (appointments.size()!=0){
-        	System.out.println("Marcações do dia escolhido");
-	        for (Appointment a: appointments){
-	            System.out.println(a);
-	        }
-	    }
+        TreeMap<LocalTime, Appointment> t = model.seeAppointments(diaMarcacao);
+        if (t!=null) {
+	        ArrayList<Appointment> appointments= new ArrayList<>(t.values());
+		    if (appointments.size()!=0){
+	        	System.out.println("Marcações do dia escolhido");
+		        for (Appointment a: appointments){
+		            System.out.println(a);
+		        }
+		    }
+        }
         System.out.println("Insira a hora a que começa a marcação pretendida (apenas entre as 10:00 e as 20:00, a cada :00 ou :30)");
         LocalTime horaInicio = Input.lerHoraMarcacao();
         if (horaInicio.getMinute()>30){
@@ -311,13 +328,16 @@ public class Controller {
             System.out.println("Insira a data de acordo com a resolução escolhida no ficheiro de configuração (yyyy-mm-dd) :");
         }
         LocalDate diaMarcacao = Input.lerData();
-        ArrayList<Appointment> appointments= new ArrayList<>(model.seeAppointments(diaMarcacao).values());
-	    if (appointments.size()!=0){
-        	System.out.println("Marcações do dia escolhido");
-	        for (Appointment a: appointments){
-	            System.out.println(a);
-	        }
-	    } else {
+        TreeMap<LocalTime, Appointment> t = model.seeAppointments(diaMarcacao);
+        if (t!=null) {
+	        ArrayList<Appointment> appointments= new ArrayList<>(t.values());
+		    if (appointments.size()!=0){
+	        	System.out.println("Marcações do dia escolhido");
+		        for (Appointment a: appointments){
+		            System.out.println(a);
+		        }
+		    }
+        } else {
 	    	System.out.println("Não tem marcações neste dia.");
 	    }
     }
