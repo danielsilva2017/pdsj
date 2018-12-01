@@ -5,14 +5,16 @@
  */
 package pdsj;
 
+import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Month;
 import java.time.Period;
+import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import static java.time.temporal.TemporalAdjusters.firstInMonth;
 import java.util.TreeMap;
 
 public class Model {
@@ -151,7 +153,7 @@ public class Model {
         ZonedDateTime nowz = ZonedDateTime.of(now,fusoN);
         ZonedDateTime nowz2 = ZonedDateTime.of(now2,fusoN2);
         Duration x = Duration.between(nowz,nowz2);
-         long a = x.getSeconds();
+        long a = x.getSeconds();
         return a;
     }
    
@@ -159,14 +161,41 @@ public class Model {
     //Funçoes controller3
     
     /**
+     * Esta função calcula qual o dia do mês do ano dado duma determinada semana 
+     * com um certo dia da semana.
+     * @param ano
+     * @param mes que define qual o mês do ano
+     * @param semana que pode ter valor entre 1 e 4, inclusive
+     * @param diaDaSemana que pode ter o valor SEGUNDA, TERÇA, QUARTA, QUINTA, SEXTA, SÁBADO ou DOMINGO
+     * @return String com a informação do dia do mês pedido
+     */
+    public String contasMes(int ano, int mes, int semana, String diaDaSemana){
+        YearMonth ym = YearMonth.of(LocalDate.now().getYear(), mes);
+        DayOfWeek dow = OtherFunctions.getWeek(diaDaSemana);
+        String f;
+        String mes2 = OtherFunctions.getMes(mes);
+       
+        LocalDate diaSem = ym.atDay(1).plusWeeks(semana-1).with(firstInMonth(dow));
+        
+        if(diaDaSemana.endsWith("A")){
+            f = "A " + diaDaSemana.toLowerCase();
+        } else{
+            f = "O " + diaDaSemana.toLowerCase();
+        }
+        
+        return f  + " da " + semana + "ª semana de " + mes2 + " do ano " + ano + " ocorre no dia " + diaSem.getDayOfMonth();
+    }
+    
+    /**
      * Esta função calcula quantos anos, meses e dias existem de diferença entre duas datas.
      * @param data1 data inicial
      * @param data2 data final
-     * @return Periodo
+     * @return Period
      */
     public Period contasDatas(LocalDate data1, LocalDate data2){
         Period p = Period.between(data1, data2);
         Period p1 = p.normalized();
+        
         return p1;
     }
     /**
@@ -197,9 +226,7 @@ public class Model {
             s = hora2.getSecond() - hora1.getSecond();
         
         
-        
-        LocalTime ht = LocalTime.of(h, m, s);
-        return ht;
+        return LocalTime.of(h, m, s);
     }
     /**
      * Esta função calcula quantos anos, meses, dias, horas, minutos e seguntos existem 
@@ -211,30 +238,9 @@ public class Model {
      * @return String
      */
     public String contasDatasHoras(LocalDate data1, LocalDate data2, LocalTime hora1, LocalTime hora2){
-        Period p = Period.between(data1, data2);
-        Period p1 = p.normalized();
+        Period p1 = contasDatas(data1, data2);
+        LocalTime ht = contasHoras(hora1, hora2);
         
-        int h = 0;
-        int m = 0;
-        int s = 0;
-        
-        if(hora1.getHour() > hora2.getHour())
-            h = hora1.getHour() - hora2.getHour();
-        else
-            h = hora2.getHour() - hora1.getHour();
-        
-        if(hora1.getMinute() > hora2.getMinute())
-            m = hora1.getMinute() - hora2.getMinute();
-        else
-            m = hora2.getMinute() - hora1.getMinute();
-        
-        if(hora1.getSecond() > hora2.getSecond())
-            s = hora1.getSecond() - hora2.getSecond();
-        else
-            s = hora2.getSecond() - hora1.getSecond();
-        
-        
-        LocalTime ht = LocalTime.of(h, m, s);
         return "Diferença de datas -> Anos " + p1.getYears()+ 
                 "; Meses " + p1.getMonths() + "; Dias " + p1.getDays() + ";\n "
                 + "                     Horas " + ht.getHour() +
@@ -251,6 +257,7 @@ public class Model {
      */
     public LocalDate addDatas(LocalDate data, int ano, int mes, int semana, int dias){
         LocalDate data2 = data.plusYears(ano).plusMonths(mes).plusWeeks(semana).plusDays(dias);
+        
         return data2;
     }
     /**
@@ -264,6 +271,7 @@ public class Model {
     */
     public LocalDate subDatas(LocalDate data, int ano, int mes, int semana, int dias){
         LocalDate data2 = data.minusYears(ano).minusMonths(mes).minusWeeks(semana).minusDays(dias);
+        
         return data2;
     }
 }

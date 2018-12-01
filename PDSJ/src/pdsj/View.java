@@ -22,7 +22,7 @@ public class View {
     // Cria a View baseada em Menus textuais
     public static Menus initView() { 
         Menus menusSIGCA = new Menus();
-        Opcao op1, op2, op3, op4, op5, op6;  
+        Opcao op0, op1, op2, op3, op4, op5, op6;  
         
         //Menu principal
         op1 = new Opcao("Calculadora de Datas ....... ", "C");
@@ -35,18 +35,17 @@ public class View {
         
         
         //Calculadora
-        op1 = new Opcao("Diferença Entre Datas ........... ", "D");
-        op2 = new Opcao("Diferença Entre Horas ........... ", "H");
-        op3 = new Opcao("Diferença Entre Datas e Horas ... ", "E");
-        op4 = new Opcao("Adicionar Valores a uma Data .... ", "A"); 
-        op5 = new Opcao("Subtrair Valores a uma Data ..... ", "B"); 
-        op6 = new Opcao("Menu Principal >>>>>>>>>>>>>>>>>> ", "S"); 
-        List<Opcao> linhas10 = Arrays.asList(op1, op2, op3, op4, op5, op6);
+        op0 = new Opcao("Dia da Semana do Mês .............. ", "M");
+        op1 = new Opcao("Diferença Entre Datas ............. ", "D");
+        op2 = new Opcao("Diferença Entre Horas ............. ", "H");
+        op3 = new Opcao("Diferença Entre Datas e Horas ..... ", "E");
+        op4 = new Opcao("Adicionar Valores a uma Data ...... ", "A"); 
+        op5 = new Opcao("Subtrair Valores a uma Data ....... ", "B"); 
+        op6 = new Opcao("Menu Principal >>>>>>>>>>>>>>>>>>>> ", "S"); 
+        List<Opcao> linhas10 = Arrays.asList(op0, op1, op2, op3, op4, op5, op6);
         Menu menu10 = new Menu(linhas10, "   Menu principal da Calculadora");        
         menusSIGCA.addMenu(10, menu10);
        
-        
-        
         
         
         //Fuso horario

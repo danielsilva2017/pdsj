@@ -26,16 +26,20 @@ public class App {
         String fileName = System.getProperty("user.dir")+"\\conf.txt";
         FileReader fileReader = new FileReader(fileName);
         String [] lines = new String[10];
+        
         try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             String line;
-            int i =0;
+            int i = 0;
+            
             while((line = bufferedReader.readLine()) != null) {
                 i++;
                 lines[i] = line;
             }
              
         }
-        Configs.formatDate=lines[1];
+        Configs.formatDate=lines[1].split("=")[1];
+        Configs.endHour=Integer.parseInt(lines[2].split("=")[1]);
+        Configs.startingHour=Integer.parseInt(lines[3].split("=")[1]);
     }
     
     /**

@@ -5,6 +5,7 @@
  */
 package pdsj;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
@@ -91,5 +92,49 @@ public class OtherFunctions {
                 default: break;
             }
         
+    }
+    
+    /**
+     * Esta função transforma o mês inserido em forma numérica em formato em String
+     * @param mes número do mês
+     * @return String com o nome do mês
+     */
+    public static String getMes(int mes){
+        String mes2 = "";
+        switch(mes){
+            case 1:  mes2 = "Janeiro";      break;
+            case 2:  mes2 = "Fevereiro";    break;
+            case 3:  mes2 = "Março";        break;
+            case 4:  mes2 = "Abril";        break;
+            case 5:  mes2 = "Maio";         break;
+            case 6:  mes2 = "Junho";        break;
+            case 7:  mes2 = "Julho";        break;
+            case 8:  mes2 = "Agosto";       break;
+            case 9:  mes2 = "Setembro";     break;
+            case 10: mes2 = "Outubro";      break;
+            case 11: mes2 = "Novembro";     break;
+            case 12: mes2 = "Dezembro";     break;
+        }
+        return mes2;
+    }
+    /**
+     * Esta função transforma o mês inserido em forma de String em formato java.time.DayOfWeek
+     * @param diaDaSemana dia da semana (ex.: SEGUNDA)
+     * @return DayOfWeek que é o dia da semana
+     */
+    public static DayOfWeek getWeek(String diaDaSemana){
+        DayOfWeek dow = DayOfWeek.MONDAY;
+        
+        switch(diaDaSemana) {
+                case "SEGUNDA": dow = DayOfWeek.MONDAY;     break;
+                case "TERÇA":   dow = DayOfWeek.TUESDAY;    break;
+                case "QUARTA":  dow = DayOfWeek.WEDNESDAY;  break;
+                case "QUINTA":  dow = DayOfWeek.THURSDAY;   break;
+                case "SEXTA":   dow = DayOfWeek.FRIDAY;     break;
+                case "SÁBADO":  dow = DayOfWeek.SATURDAY;   break;
+                case "DOMINGO": dow = DayOfWeek.SUNDAY;     break;
+                default: System.out.println("Opcão Inválida !"); break;
+        }
+        return dow;
     }
 }
