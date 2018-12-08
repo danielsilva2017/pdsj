@@ -19,6 +19,7 @@ import java.util.TreeSet;
 import static pdsj.OtherFunctions.fashionPrint;
 import static pdsj.OtherFunctions.parseDate;
 import static pdsj.OtherFunctions.getMonth;
+import static pdsj.OtherFunctions.getMes;
 import static pdsj.OtherFunctions.parseHours;
 import static pdsj.OtherFunctions.segundosParaHoras;
 
@@ -194,7 +195,7 @@ public class Controller {
         LocalDate data2 = model.addDatas(data, ano, mes, semana, dias);
         
         System.out.println("Nova data -> Ano " + data2.getYear()
-                + "; Mês " + data2.getMonth() + "; Dia " + data2.getDayOfMonth());
+                + "; Mês " + getMes(data2.getMonthValue()) + "; Dia " + data2.getDayOfMonth());
     }
 
     /*
@@ -227,7 +228,7 @@ public class Controller {
         LocalDate data2 = model.subDatas(data, ano, mes, semana, dias);
         
         System.out.println("Nova data -> Ano " + data2.getYear()
-                + "; Mês " + data2.getMonth() + "; Dia " + data2.getDayOfMonth());
+                + "; Mês " + getMes(data2.getMonthValue()) + "; Dia " + data2.getDayOfMonth());
     }
 
     //Metodos Fuso Horario
@@ -557,5 +558,4 @@ public class Controller {
             }
         } while (!opcao.equals("S"));
     }
-
 }
